@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root>
+	<properties>
+		<name>Eldorian Calendar</name>
+		<version>1.0</version>
+		<author>Berwind</author>
+		<ruleset>5E</ruleset>
+		<description>
+			Eldorian Calendar
+		</description>
+	</properties>
+	<base>
+	    <script name="eldorian" file="eldorian.lua" />
+	</base>
+</root>

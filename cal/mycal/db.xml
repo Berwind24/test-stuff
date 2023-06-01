@@ -1,0 +1,65 @@
+<root version="3.0">
+	<calendar>
+		<base static="true">
+			<Eldorian>
+				<name type="string">Eldorian</name>
+				<setting type="string">Any</setting>
+				<lunardaycalc type="string">EldorianCalc</lunardaycalc>
+				<lunarweek>
+					<day1 type="string">Primaris</day1>
+					<day2 type="string">Secundar</day2>
+					<day3 type="string">Tertiarin</day3>
+					<day4 type="string">Quartaran</day4>
+					<day5 type="string">Quinitar</day5>
+					<day6 type="string">Sextaran</day6>
+					<day7 type="string">Septinar</day7>
+					<day8 type="string">Octaran</day8>
+					<day9 type="string">Nonaris</day9>
+					<day10 type="string">Decaran</day10>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">40</days>
+						<name type="string">Sylvanar</name>
+					</period1>
+					<period2>
+						<days type="number">40</days>
+						<name type="string">Betorian</name>
+					</period2>
+					<period3>
+						<days type="number">40</days>
+						<name type="string">Ganderath</name>
+					</period3>
+					<period4>
+						<days type="number">40</days>
+						<name type="string">Tormaris</name>
+					</period4>
+					<period5>
+						<days type="number">40</days>
+						<name type="string">Scarlun</name>
+					</period5>
+					<period6>
+						<days type="number">40</days>
+						<name type="string">Underthane</name>
+					</period6>
+					<period7>
+						<days type="number">40</days>
+						<name type="string">Balorin</name>
+					</period7>
+					<period8>
+						<days type="number">40</days>
+						<name type="string">Dinithar</name>
+					</period8>
+					<period9>
+						<days type="number">39</days>
+						<name type="string">Unradel</name>
+					</period9>
+					<period10>
+						<days type="number">10</days>
+						<name type="string">Midwinter Festival</name>
+					</period10>
+				</periods>
+			</Eldorian>
+		</base>
+	</calendar>
+</root>
