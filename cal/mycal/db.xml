@@ -2,7 +2,7 @@
 	<calendar>
 		<base static="true">
 			<Eldorian>
-				<name type="string">Eldorian</name>
+				<name type="string">Eldorian Calendar</name>
 				<setting type="string">Any</setting>
 				<lunardaycalc type="string">EldorianCalc</lunardaycalc>
 				<lunarweek>
