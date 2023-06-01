@@ -1,0 +1,22 @@
+The calendar.base.<name> path is where the calendar "meta-information" is stored in the module. This is copied into the campaign at calendar.data when a calendar is selected.
+
+name = Name of calendar displayed in calendar selection screen
+setting = Setting info of calendar displayed in calendar selection screen
+
+lunarweek.day# = Name of each day of the lunar week
+lunardaycalc = Registered name of function that translates year/month/day to lunar week day
+
+periods.period#.name= Name of each month
+periods.period#.days= Number of days in each month
+periodvarcalc = Registered name of function that returns modification of days in month based on year/month
+
+periods.period#.holidays.holiday#.name = Name of a holiday in the month
+periods.period#.holidays.holiday#.startday = First numerical day of a holiday in the month
+periods.period#.holidays.holiday#.duration = Number of days of duration of a holiday in the month
+
+There are many assumptions in the calendar in order to make it reasonable to code, including year/month/day/hour/minute as units of time, 24 hour days, 60 minute hours, holidays start on a fixed day of the year, holiday duration does not span month boundaries.
+
+For output, 
+the data format is <lunar day>, #<suffix> <month>, <year> <epoch>
+the time format is <hour12>:<minutes> <AM/PM>
+

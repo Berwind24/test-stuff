@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.9">
+	<!--The text in the Name is the name of the module.  This is what you will see on the library loading screen -->
+	<name>Name of the Calendar Module</name>
+	<!--Insert your author name here-->
+	<author>Name of the Author</author>
+	<!--Nearly all calendars should have the ruleset marked as Any, although if you do put in something else, it will only be loaded in the specified ruleset. -->
+	<ruleset>Any</ruleset>
+</root>

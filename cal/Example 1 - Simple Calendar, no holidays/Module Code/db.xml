@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root version="3.0">
+	<calendar>
+		<base static="true">
+			<Example1>
+				<name type="string">Example Calender 1</name>
+				<setting type="string">Any</setting>
+				<lunarweek>
+					<day1 type="string">Firstday</day1>
+					<day2 type="string">Seconday</day2>
+					<day3 type="string">Thirdday</day3>
+					<day4 type="string">Fourthday</day4>
+					<day5 type="string">Fifthday</day5>
+					<day6 type="string">Sixthday</day6>
+					<day7 type="string">Seventhday</day7>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">28</days>
+						<name type="string">FirstMonth</name>
+					</period1>
+					<period2>
+						<days type="number">28</days>
+						<name type="string">SecondMonth</name>
+					</period2>
+					<period3>
+						<days type="number">28</days>
+						<name type="string">ThirdMonth</name>
+					</period3>
+					<period4>
+						<days type="number">28</days>
+						<name type="string">FourthMonth</name>
+					</period4>
+					<period5>
+						<days type="number">28</days>
+						<name type="string">FifthMonth</name>
+					</period5>
+					<period6>
+						<days type="number">28</days>
+						<name type="string">SixthMonth</name>
+					</period6>
+					<period7>
+						<days type="number">28</days>
+						<name type="string">SeventhMonth</name>
+					</period7>
+				</periods>
+			</Example1>
+		</base>
+	</calendar>
+</root>

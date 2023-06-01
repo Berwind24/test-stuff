@@ -1,0 +1,74 @@
+Creating your own custom calendar for Fantasy Grounds
+
+Calendars within Fantasy Grounds are defined within an XML file contained within a module. In addition to the module which defines the calendar structure, you can optionally create an extension which provides further capabilities.   This tutorial is not a tutorial on XML or LUA code.  When editing XML and LUA files, it is recommended a text editor with capabilities to support writing of code.  The author uses Notepad++ as the editor of choice, but many similar applications work equally well such as Sublime, VIM, or even simple notepad.  
+
+Extracting and packing modules and extensions.
+All modules and extensions are standard zip files with the extension changed to .mod and .ext respectively.  In order to view or modify existing files, you will need to extract the files.  This is commonly done by changing the extension to .zip, then extracting the files using any of the standard tools.  The author uses 7zip, a free application, to extract files and to pack edited files back into zip files.  After editing the extracted files, they can be repacked into a module or extension by adding all of the files to a zip file and then changing the extension to .mod for a module, and .ext for an extension.  It is important when adding the files to the zip container that you do not add the parent directory, just add the files themselves.  If you add the parent directory to the zip file, FG will not recognize them.
+
+
+Calendar Module
+A calendar module requires at a minimum, 2 files.
+definition.xml
+The definition.xml file is used to provide some information about the module itself. See the definition.xml file within the Sample Module Files folder for an example with documentation.
+
+db.xml
+The db.xml file defines the structure of the calendar. See the db.xml file within the Sample Module Files folder for an example with documentation.  A single db.xml file can define multiple calendars, however, FG can only have 1 calendar selected at once.  For purposes of clarity, all example files will only contain a single calendar.
+ 
+
+Calendar Extension
+
+If the optional <lunardaycalc> or <periodvarcalc> tags are used in the db.xml file contained within the calendar module, it will be necessary to create an extension to define the functions being used. 
+Within the extension there will be at minimum 2 files, an extension.xml file and a lua code file.  The name of the lua file will be defined within the extension.xml file, so you can call it whatever you like.
+
+extension.xml
+The extension.xml file contains information about the extension itself.  See the extension.xml file within the Sample Extension Files folder for an example with documentation
+
+myCalendar.lua
+The LUA code file contains several functions which are necessary to allow Fantasy Grounds to display the calendar properly.  The name of the file is defined in the extension.xml file, so you can call it something that makes sense.  See the ExampleLua.lua file in the Sample Extension Files folder for an exmaple with documentation.  
+
+
+Included in this tutorial are several example calendars.  I have included the individual files for each and the module and/or extension for each.
+
+Example 1 - Simple calendar, no holidays | Contains a module only, no extension
+Example 2 - Simple calendar, holidays | Contains a module only, no extension
+Example 3 - Months of varying length, calculate day of week | Contains a module and extension, no leap year function
+Example 4 - Gregorian calendar. Months of varying length, calculate day of week and leap year. | Contains a module and extension
+Example 5 - Sample calendar from the FG forums | Contains a module and extension
+
+
+
+Example 1 - simple calendar, no holidays
+----------------
+First sample calendar has only a mod file and no accompanying extension.  This is because it is a very simple calendar requiring no additional calculations.
+
+Calendar basics
+The Example 1 calendar has
+7 months.
+Each month has 28 days (4 weeks)
+Each week has 7 days.
+
+So, due to the simple math, each month looks exactly the same as every other month.  The first day of the Month is the first day of the the week.  There are no leap years.
+
+Example 2
+----------
+The same calendar as Example 1 except with holidays added.
+
+Example 3
+-------------
+Example Calendar 3 is a simple calendar consisting of 12 months.  Odd months have 30 days, and even months have 31 days.  There are no leap years.
+
+In order for FG to know what day of the week a month starts, an extension is included with the LUA code to calculate that.
+
+Example 4
+-----------
+Example 3 is the default Gregorian calendar as defined in the CoreRPG with some code comments added in with explanations.
+
+The Gregorian calendar has months of varying length from 28-31 days, and has leap years.  So the example includes the extension code which calculates both the day of the week properly, and calculates the number of days to add to the leap year.
+
+Example 5
+---------
+An excellent example calendar from a user on the FG forums
+
+Example 6
+----------
+A modified version of the traveller calendar, showing how to modify/format the day and date display

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root version="3.0">
+	<calendar>
+		<base static="true">
+		<imperial>
+				<name type="string">Modified Third Imperium Calendar</name>
+				<setting type="string">Modified Traveller</setting>
+				<dayformat type="string">xtraveller_imperial</dayformat>
+				<dateformat type="string">xtraveller_imperial</dateformat>
+				<lunarweek>
+					<day1 type="string">Wonday</day1>
+					<day2 type="string">Tuday</day2>
+					<day3 type="string">Thirday</day3>
+					<day4 type="string">Forday</day4>
+					<day5 type="string">Fiday</day5>
+					<day6 type="string">Sixday</day6>
+					<day7 type="string">Senday</day7>
+					<day8 type="string">Wonday</day8>
+					<day9 type="string">Tuday</day9>
+					<day10 type="string">Thirday</day10>
+					<day11 type="string">Forday</day11>
+					<day12 type="string">Fiday</day12>
+					<day13 type="string">Sixday</day13>
+					<day14 type="string">Senday</day14>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">1</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Holiday</name>
+					</period1>
+					<period2>
+						<days type="number">364</days>
+						<start type="number">2</start>
+						<name type="string">Year</name>
+					</period2>
+				</periods>
+			</imperial>
+		</base>
+	</calendar>
+</root>

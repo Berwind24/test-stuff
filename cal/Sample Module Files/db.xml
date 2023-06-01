@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root version="3.0">
+	<calendar>
+		<base static="true">
+		<!-- Only edit entries below this one -->
+			<!-- The next line is an XML tag that begins the definition of your calendar.  Everything between <calendarNameTag> and </calendarNameTag>.  Those names are not special, and you can change them to something fitting your calendar name like  <MayanCalendar> and </MayanCalendar>.  It is possible to have multiple calendars defined within the same db.xml file.  each one needs to be wrapped within its own, unique tags.-->
+			<calendarNameTag>
+				<!-- The next line defines the name of the calendar.  When the Module is loaded in FG and you select your calendar, this is the name you will see.-->
+				<name type="string">Name of Calendar</name>
+				<!-- Here is where you put some text as to what setting this calendar is intended to be used for.  This does not restrict you in any way, its just a suggestion.  Like a Forgotten Realms calendar, or the Calendar of Dark Sun -->
+				<setting type="string">SpaceJam Realm</setting>
+				<!-- The following tag is optional. it is used to define a tag which identifies the function that will be used to calculate the day of the week given any Year, Month, Day.  This is primarily used to ensure that the calendar wraps days of the week properly for calendars with varying month lengths.  For example, if Jan 31 ends on a Wed, then Feb 1 should fall on a Thurs.  Without a function defined, the first day of the month will always fall on the first day of the week.  If your calendar also has leap years, you must ensure that the leap years are accounted for in the code.  The function that will perform this calculation must be defined in LUA code and located in an extension.  -->				
+				<lunardaycalc type="string">DayOfWeekCodeTag</lunardaycalc>
+				<!-- The following tag is optional.  It is used to define a tag which identifies the function used to format the day field on the calendar.  This function must be defined in LUA code contained within an extension. -->
+				<dayformat type="string">traveller_imperial</dayformat>
+				
+				<!-- The following tag is optional.  It is used to define a tag which identifies the function used to format the date format that is output to the chat.  The function must be diefined in LUA code adn located in an extension. -->
+				<dateformat type="string">traveller_imperial</dateformat>
+
+
+
+				<!-- The following section defines the length and name of days of the week.  Within the lunar week, you define each day in a <day#> </day#> tag.  You cannot have multiple day tags with the same name.  each day tag has a number, so the first day of the week is 1, the 10th day of the week is 10 -->
+				<lunarweek>
+					<day1 type="string">Name of first day of week</day1>
+					<day2 type="string">Name of second day of week</day2>
+				</lunarweek>
+				<!-- The following tag is optional.  It is used to define a tag which identifies the function that will be used to calculate any changes to the number of days within a month/period.  This is primarily used to calculate things like leap years.  For example, February typically has 28 days, but on occasion, there are 29.  This identifies the function that is used to calculate whether a particular month has more or less days than normal. -->
+				<periodvarcalc type="string">LeapYearCodeTag</periodvarcalc>
+				<!-- The <periods></periods> tags wrap and define all of the months/periods of the year.  You can have as many periods defined as you like, but each one has to have a unique number in the tag.  You cannot have multiple sets of <period1></period1> tags for example.  -->
+				<periods>
+					<!-- The following section defines a simple month/period.  You have a <days></days> tag to define the standard number of days in this month, and a <name></name> tag which defines its name.  An example would be <name>January</name><days>31</days> -->
+					<period1>
+						<days type="number">Num of days in first month/period</days>
+						<name type="string">name of first month/period</name>
+					</period1>
+					<period2>
+						<days type="number">Num of days in second month/period</days>
+						<name type="string">name of second month/period</name>
+					</period2>
+					<period3>
+						<days type="number">Num of days in third month/period</days>
+						<name type="string">name of third month/period</name>
+						<!-- Within a period you can define holidays.  These holidays will show up on the FG calendar once loaded. You can define multiple holidays within a month, but a holiday CANNOT span outside of the month.  If you have a holiday that spans 2 periods, you will need to define it so that it goes to the end in one month, and define it again at the beginning of the next month. -->
+						<holidays>
+							<!-- Each holiday is defined and wrapped in its own <holiday#></holiday#> tag. the <duration></duration> tag defines how many days this holiday spans.  The <name></name> tag sets the name thats displayed by FG, and the <startday></startday> tag defines what day of the month this holiday starts on.  -->
+							<holiday1>
+								<duration type="number">number of days this holiday spans</duration>
+								<name type="string">Name of the holiday</name>
+								<startday type="number">Day of the month/period the holiday starts</startday>
+							</holiday1>
+							<holiday2>
+								<duration type="number">12</duration>
+								<name type="string">Feast Day of the Goblin Lords</name>
+								<startday type="number">3</startday>						
+							</holiday2>
+						</holidays>
+					</period3>
+				</periods>
+			</calendarNameTag>
+		<!--Do not edit anything below here -->
+		</base>
+	</calendar>
+</root> 

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root version="1.0">
+    <calendar>
+	<base static="true">
+	<Collapse>
+		<name type="string">Calendar of Avarus</name>
+		<setting type="string">Collapse</setting>
+		<lunardaycalc type="string">collapse</lunardaycalc>
+		<periodvarcalc type="string">collapse</periodvarcalc>
+		<lunarweek>
+			<day1 type="string">Saulesday</day1>
+			<day2 type="string">Selensday</day2>
+			<day3 type="string">Tyrsday</day3>
+			<day4 type="string">Crownsday</day4>
+			<day5 type="string">Geldursday</day5>
+			<day6 type="string">Daliasday</day6>
+			<day7 type="string">Ausrinesday</day7>
+		</lunarweek>
+		<periods>
+			<period1>
+				<days type="number">30</days>
+				<name type="string">Kyzer</name>
+			</period1>
+			<period2>
+				<days type="number">30</days>
+				<name type="string">Noxan</name>
+			</period2>
+			<period3>
+				<days type="number">30</days>
+				<holidays>
+					<holiday1>
+						<duration type="number">1</duration>
+						<name type="string">Spring Equinox</name>
+						<startday type="number">21</startday>
+					</holiday1>
+				</holidays>
+				<name type="string">Kovas</name>
+			</period3>
+			<period4>
+				<days type="number">1</days>
+				<holidays>
+					<holiday1>
+						<duration type="number">1</duration>
+						<name type="string">Rebirth</name>
+						<startday type="number">1</startday>
+					</holiday1>
+				</holidays>
+				<name type="string">Rebirth</name>
+			</period4>
+			<period5>
+				<days type="number">30</days>
+				<name type="string">Epsion</name>
+			</period5>
+			<period6>
+				<days type="number">30</days>
+				<name type="string">Amorien</name>
+			</period6>
+			<period7>
+				<days type="number">30</days>
+				<holidays>
+					<holiday1>
+						<duration type="number">1</duration>
+						<name type="string">Summer Solstice</name>
+						<startday type="number">21</startday>
+					</holiday1>
+				</holidays>
+				<name type="string">Saule</name>
+			</period7>
+			<period8>
+				<days type="number">3</days>
+				<holidays>
+					<holiday1>
+						<duration type="number">3</duration>
+						<name type="string">Midsummer Annual Holiday</name>
+						<startday type="number">1</startday>
+					</holiday1>
+					<holiday2>
+						<duration type="number">1</duration>
+						<name type="string">Leap Year - Every Four Years</name>
+						<startday type="number">4</startday>
+					</holiday2>
+				</holidays>
+				<name type="string">Midsummer</name>
+			</period8>
+			<period9>
+				<days type="number">30</days>
+				<name type="string">Ausrine</name>
+			</period9>
+			<period10>
+				<days type="number">30</days>
+				<name type="string">Tavalas</name>
+			</period10>
+			<period11>
+				<days type="number">30</days>
+				<holidays>
+					<holiday1>
+						<duration type="number">1</duration>
+						<name type="string">Autumn Equinox</name>
+						<startday type="number">21</startday>
+					</holiday1>
+				</holidays>
+				<name type="string">Selene</name>
+			</period11>
+			<period12>
+				<days type="number">30</days>
+				<name type="string">Zauberyn</name>
+			</period12>
+			<period13>
+				<days type="number">30</days>
+				<name type="string">Therran</name>
+			</period13>
+			<period14>
+				<days type="number">30</days>
+				<holidays>
+					<holiday1>
+						<duration type="number">1</duration>
+						<name type="string">Winter Solstice</name>
+						<startday type="number">21</startday>
+					</holiday1>
+				</holidays>
+				<name type="string">Morpheus</name>
+			</period14>
+			<period15>
+				<days type="number">1</days>
+				<name type="string">The Dreaming</name>
+			</period15>
+		</periods>
+	</Collapse>
+	</base>
+    </calendar>
+</root>

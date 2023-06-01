@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<root version="1.0">
+	<properties>
+		<name>Example 3 - Months of varying length, calc day of week</name>
+		<version>1.0</version>
+		<author>mattekure</author>
+		<ruleset>Any</ruleset>
+		<description>
+			Testing Various calendar functions
+		</description>
+	</properties>
+	<base>
+	    <script name="Example3" file="Example3.lua" />
+	</base>
+</root>

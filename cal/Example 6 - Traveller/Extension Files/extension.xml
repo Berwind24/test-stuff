@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<root version="1.0">
+	<properties>
+		<name>Example 6 - Traveller day/date formatting</name>
+		<version>1.0</version>
+		<author>mattekure</author>
+		<ruleset>Any</ruleset>
+		<description>
+			
+		</description>
+	</properties>
+	<base>
+	    <script name="TravellerCal" file="traveller.lua" />
+	</base>
+</root>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- This extension.xml file defines the properties of the extension.  In it we define some simple properties and point to the LUA script file containing the actual code. -->
+<root version="1.0">
+	<properties>
+		<!-- Enter name of the extension, this is what will appear when you select the extensions to load when loading or creating a campaign -->
+		<name>Example 3 - Months of varying length, calc day of week</name>
+		<!-- As you update, you can change the version number to know which version you have loaded -->
+		<version>1.0</version>
+		<!-- Enter the authors name here -->
+		<author>mattekure</author>
+		<!-- Select the ruleset this extension is intended for.  To allow it to be used in any ruleset, use Any -->
+		<ruleset>Any</ruleset>
+		<!-- Enter a description of what the extension does, or what its for -->
+		<description>
+			Testing Various calendar functions
+		</description>
+	</properties>
+	<base>
+		<!-- This is where we tell FG about our lua code file.  The filename must match exactly.  Name the script name the same as the file name. -->
+	    <script name="ExampleLua" file="ExampleLua.lua" />
+	</base>
+</root>
