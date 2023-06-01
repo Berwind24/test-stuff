@@ -1,6 +1,6 @@
 function onInit()
-    CalendarManager.registerLunarDayHandler("Eldorian", calcEldorianLunarDay);
-    CalendarManager.registerMonthVarHandler("Eldorian", calcEldorianMonthVar);
+    CalendarManager.registerLunarDayHandler("EldorianCalc", calcEldorianLunarDay);
+    CalendarManager.registerMonthVarHandler("EldorianCalc", calcEldorianMonthVar);
 end
 
 function calcEldorianLunarDay(nYear, nMonth, nDay)
