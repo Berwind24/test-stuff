@@ -10,6 +10,6 @@
 		</description>
 	</properties>
 	<base>
-	    <script name="eldorian" file="eldorian.lua" />
+	    <script name="EldorianCalc" file="EldorianCalc.lua" />
 	</base>
 </root>
