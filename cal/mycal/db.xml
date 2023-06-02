@@ -4,7 +4,7 @@
 			<Eldorian>
 				<name type="string">Eldorian Calendar</name>
 				<setting type="string">Any</setting>
-				<lunardaycalc type="string">EldorianCalc</lunardaycalc>
+				<lunardaycalc type="string">Eldorian</lunardaycalc>
 				<lunarweek>
 					<day1 type="string">Primaris</day1>
 					<day2 type="string">Secundar</day2>
@@ -17,6 +17,7 @@
 					<day9 type="string">Nonaris</day9>
 					<day10 type="string">Decaran</day10>
 				</lunarweek>
+				<periodvarcalc type="string">Eldorian</periodvarcalc>
 				<periods>
 					<period1>
 						<days type="number">40</days>
