@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root version="3.0">
+	<calendar>
+		<base static="true">
+			<gregorian>
+				<name type="string">Gregorian Calendar</name>
+				<setting type="string">Any</setting>
+				<lunardaycalc type="string">gregorian</lunardaycalc>
+				<lunarweek>
+					<day1 type="string">Sunday</day1>
+					<day2 type="string">Monday</day2>
+					<day3 type="string">Tuesday</day3>
+					<day4 type="string">Wednesday</day4>
+					<day5 type="string">Thursday</day5>
+					<day6 type="string">Friday</day6>
+					<day7 type="string">Saturday</day7>
+				</lunarweek>
+				<periodvarcalc type="string">gregorian</periodvarcalc>
+				<periods>
+					<period1>
+						<days type="number">31</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">New Year</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">January</name>
+					</period1>
+					<period2>
+						<days type="number">28</days>
+						<name type="string">February</name>
+					</period2>
+					<period3>
+						<days type="number">31</days>
+						<name type="string">March</name>
+					</period3>
+					<period4>
+						<days type="number">30</days>
+						<name type="string">April</name>
+					</period4>
+					<period5>
+						<days type="number">31</days>
+						<name type="string">May</name>
+					</period5>
+					<period6>
+						<days type="number">30</days>
+						<name type="string">June</name>
+					</period6>
+					<period7>
+						<days type="number">31</days>
+						<name type="string">July</name>
+					</period7>
+					<period8>
+						<days type="number">31</days>
+						<name type="string">August</name>
+					</period8>
+					<period9>
+						<days type="number">30</days>
+						<name type="string">September</name>
+					</period9>
+					<period10>
+						<days type="number">31</days>
+						<name type="string">October</name>
+					</period10>
+					<period11>
+						<days type="number">30</days>
+						<name type="string">November</name>
+					</period11>
+					<period12>
+						<days type="number">31</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Christmas</name>
+								<startday type="number">25</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">December</name>
+					</period12>
+				</periods>
+			</gregorian>
+			<greyhawk>
+				<name type="string">Calendar of Flanaess</name>
+				<setting type="string">D&amp;D - World of Greyhawk</setting>
+				<lunarweek>
+					<day1 type="string">Starday</day1>
+					<day2 type="string">Sunday</day2>
+					<day3 type="string">Moonday</day3>
+					<day4 type="string">Godsday</day4>
+					<day5 type="string">Waterday</day5>
+					<day6 type="string">Earthday</day6>
+					<day7 type="string">Freeday</day7>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">7</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">7</duration>
+								<name type="string">Needfest Annual Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Needfest</name>
+					</period1>
+					<period10>
+						<days type="number">28</days>
+						<name type="string">Reaping</name>
+					</period10>
+					<period11>
+						<days type="number">28</days>
+						<name type="string">Goodmonth</name>
+					</period11>
+					<period12>
+						<days type="number">28</days>
+						<name type="string">Harvester</name>
+					</period12>
+					<period13>
+						<days type="number">7</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">7</duration>
+								<name type="string">Brewfest Annual Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Brewfest</name>
+					</period13>
+					<period14>
+						<days type="number">28</days>
+						<name type="string">Patchwell</name>
+					</period14>
+					<period15>
+						<days type="number">28</days>
+						<name type="string">Ready'reat</name>
+					</period15>
+					<period16>
+						<days type="number">28</days>
+						<name type="string">Sunsebb</name>
+					</period16>
+					<period2>
+						<days type="number">28</days>
+						<name type="string">Fireseek</name>
+					</period2>
+					<period3>
+						<days type="number">28</days>
+						<name type="string">Readying</name>
+					</period3>
+					<period4>
+						<days type="number">28</days>
+						<name type="string">Coldeven</name>
+					</period4>
+					<period5>
+						<days type="number">7</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">7</duration>
+								<name type="string">Growfest Annual Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Growfest</name>
+					</period5>
+					<period6>
+						<days type="number">28</days>
+						<name type="string">Planting</name>
+					</period6>
+					<period7>
+						<days type="number">28</days>
+						<name type="string">Flocktime</name>
+					</period7>
+					<period8>
+						<days type="number">28</days>
+						<name type="string">Wealsun</name>
+					</period8>
+					<period9>
+						<days type="number">7</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">7</duration>
+								<name type="string">Richfest Annual Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+							<holiday2>
+								<duration type="number">1</duration>
+								<name type="string">Midsummer</name>
+								<startday type="number">1</startday>
+							</holiday2>
+						</holidays>
+						<name type="string">Richfest</name>
+					</period9>
+				</periods>
+			</greyhawk>
+			<forgottenrealms>
+				<name type="string">Calendar of Harptos</name>
+				<setting type="string">D&amp;D - Forgotten Realms</setting>
+				<lunarweek>
+					<day1 type="string">First-day</day1>
+					<day10 type="string">Tenth-day</day10>
+					<day2 type="string">Second-day</day2>
+					<day3 type="string">Third-day</day3>
+					<day4 type="string">Forth-day</day4>
+					<day5 type="string">Fifth-day</day5>
+					<day6 type="string">Sixth-day</day6>
+					<day7 type="string">Seventh-day</day7>
+					<day8 type="string">Eighth-day</day8>
+					<day9 type="string">Ninth-day</day9>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">30</days>
+						<name type="string">Hammer</name>
+					</period1>
+					<period10>
+						<days type="number">1</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Midsummer Annual Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+							<holiday2>
+								<duration type="number">1</duration>
+								<name type="string">Shieldmeet - Every Four Years</name>
+								<startday type="number">1</startday>
+							</holiday2>
+						</holidays>
+						<name type="string">Midsummer</name>
+					</period10>
+					<period11>
+						<days type="number">30</days>
+						<name type="string">Eleasis</name>
+					</period11>
+					<period12>
+						<days type="number">30</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Autumn Equinox</name>
+								<startday type="number">21</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Eleint</name>
+					</period12>
+					<period13>
+						<days type="number">1</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Highharvestide Annual Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Highharvestide</name>
+					</period13>
+					<period14>
+						<days type="number">30</days>
+						<name type="string">Marpenoth</name>
+					</period14>
+					<period15>
+						<days type="number">30</days>
+						<name type="string">Uktar</name>
+					</period15>
+					<period16>
+						<days type="number">1</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">The Feast of the Moon Annual Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">The Feast of the Moon</name>
+					</period16>
+					<period17>
+						<days type="number">30</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Winter Solstice</name>
+								<startday type="number">20</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Nightal</name>
+					</period17>
+					<period2>
+						<days type="number">1</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Midwinter Annual Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Midwinter</name>
+					</period2>
+					<period3>
+						<days type="number">30</days>
+						<name type="string">Alturiak</name>
+					</period3>
+					<period4>
+						<days type="number">30</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Spring Equinox</name>
+								<startday type="number">19</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Ches</name>
+					</period4>
+					<period5>
+						<days type="number">30</days>
+						<name type="string">Tarsakh</name>
+					</period5>
+					<period6>
+						<days type="number">1</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Greengrass Annual Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Greengrass</name>
+					</period6>
+					<period7>
+						<days type="number">30</days>
+						<name type="string">Mirtul</name>
+					</period7>
+					<period8>
+						<days type="number">30</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Summer Solstice</name>
+								<startday type="number">20</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Kythorn</name>
+					</period8>
+					<period9>
+						<days type="number">30</days>
+						<name type="string">Flamerule</name>
+					</period9>
+				</periods>
+			</forgottenrealms>
+			<eberron>
+				<name type="string">Calendar of Galifar</name>
+				<setting type="string">D&amp;D - Eberron</setting>
+				<lunarweek>
+					<day1 type="string">Sul</day1>
+					<day2 type="string">Mol</day2>
+					<day3 type="string">Zol</day3>
+					<day4 type="string">Wir</day4>
+					<day5 type="string">Zor</day5>
+					<day6 type="string">Far</day6>
+					<day7 type="string">Sar</day7>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">28</days>
+						<name type="string">Zarantyr</name>
+					</period1>
+					<period10>
+						<days type="number">28</days>
+						<name type="string">Sypheros</name>
+					</period10>
+					<period11>
+						<days type="number">28</days>
+						<name type="string">Aryth</name>
+					</period11>
+					<period12>
+						<days type="number">28</days>
+						<name type="string">Vult</name>
+					</period12>
+					<period2>
+						<days type="number">28</days>
+						<name type="string">Olarune</name>
+					</period2>
+					<period3>
+						<days type="number">28</days>
+						<name type="string">Therendor</name>
+					</period3>
+					<period4>
+						<days type="number">28</days>
+						<name type="string">Eyre</name>
+					</period4>
+					<period5>
+						<days type="number">28</days>
+						<name type="string">Dravago</name>
+					</period5>
+					<period6>
+						<days type="number">28</days>
+						<name type="string">Nymm</name>
+					</period6>
+					<period7>
+						<days type="number">28</days>
+						<name type="string">Lharvion</name>
+					</period7>
+					<period8>
+						<days type="number">28</days>
+						<name type="string">Barrakas</name>
+					</period8>
+					<period9>
+						<days type="number">28</days>
+						<name type="string">Rhaan</name>
+					</period9>
+				</periods>
+			</eberron>
+			<darksun>
+				<name type="string">Calendar of Tyr</name>
+				<setting type="string">D&amp;D - Darksun</setting>
+				<lunarweek>
+					<day1 type="string">1day</day1>
+					<day2 type="string">2day</day2>
+					<day3 type="string">3day</day3>
+					<day4 type="string">4day</day4>
+					<day5 type="string">5day</day5>
+					<day6 type="string">6day</day6>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">5</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">5</duration>
+								<name type="string">Festival of the Highest Sun</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">High Sun Festival</name>
+					</period1>
+					<period10>
+						<days type="number">30</days>
+						<name type="string">Haze</name>
+					</period10>
+					<period11>
+						<days type="number">5</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">5</duration>
+								<name type="string">Festival of the Soaring Sun</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Sun Ascending Festival</name>
+					</period11>
+					<period12>
+						<days type="number">30</days>
+						<name type="string">Hoard</name>
+					</period12>
+					<period13>
+						<days type="number">30</days>
+						<name type="string">Wind</name>
+					</period13>
+					<period14>
+						<days type="number">30</days>
+						<name type="string">Sorrow</name>
+					</period14>
+					<period15>
+						<days type="number">30</days>
+						<name type="string">Smolder</name>
+					</period15>
+					<period2>
+						<days type="number">30</days>
+						<name type="string">Scorch</name>
+					</period2>
+					<period3>
+						<days type="number">30</days>
+						<name type="string">Morrow</name>
+					</period3>
+					<period4>
+						<days type="number">30</days>
+						<name type="string">Rest</name>
+					</period4>
+					<period5>
+						<days type="number">30</days>
+						<name type="string">Gather</name>
+					</period5>
+					<period6>
+						<days type="number">5</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">5</duration>
+								<name type="string">Festival of the Cooling Sun</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Sun Descending Festival</name>
+					</period6>
+					<period7>
+						<days type="number">30</days>
+						<name type="string">Breeze</name>
+					</period7>
+					<period8>
+						<days type="number">30</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Lowsun</name>
+								<startday type="number">30</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Mist</name>
+					</period8>
+					<period9>
+						<days type="number">30</days>
+						<name type="string">Bloom</name>
+					</period9>
+				</periods>
+			</darksun>
+			<golarion>
+				<name type="string">Calendar of Golarion</name>
+				<setting type="string">Pathfinder</setting>
+				<lunardaycalc type="string">golarion</lunardaycalc>
+				<lunarweek>
+					<day1 type="string">Sunday</day1>
+					<day2 type="string">Moonday</day2>
+					<day3 type="string">Toilday</day3>
+					<day4 type="string">Wealday</day4>
+					<day5 type="string">Oathday</day5>
+					<day6 type="string">Fireday</day6>
+					<day7 type="string">Starday</day7>
+				</lunarweek>
+				<periodvarcalc type="string">golarion</periodvarcalc>
+				<periods>
+					<period1>
+						<days type="number">31</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">New Year</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Abadius</name>
+					</period1>
+					<period2>
+						<days type="number">28</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Merrymead</name>
+								<startday type="number">2</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Calistril</name>
+					</period2>
+					<period3>
+						<days type="number">31</days>
+						<name type="string">Pharast</name>
+					</period3>
+					<period4>
+						<days type="number">30</days>
+						<name type="string">Gozran</name>
+					</period4>
+					<period5>
+						<days type="number">31</days>
+						<name type="string">Desnus</name>
+					</period5>
+					<period6>
+						<days type="number">30</days>
+						<name type="string">Sarenith</name>
+					</period6>
+					<period7>
+						<days type="number">31</days>
+						<name type="string">Erastus</name>
+					</period7>
+					<period8>
+						<days type="number">31</days>
+						<name type="string">Arodus</name>
+					</period8>
+					<period9>
+						<days type="number">30</days>
+						<name type="string">Rova</name>
+					</period9>
+					<period10>
+						<days type="number">31</days>
+						<name type="string">Lamashan</name>
+					</period10>
+					<period11>
+						<days type="number">30</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Seven Veils</name>
+								<startday type="number">23</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Neth</name>
+					</period11>
+					<period12>
+						<days type="number">31</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Night of the Pale</name>
+								<startday type="number">31</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Kuthona</name>
+					</period12>
+				</periods>
+			</golarion>
+			<pactstandard>
+				<name type="string">Pact Worlds Calendar</name>
+				<setting type="string">Starfinder</setting>
+				<lunardaycalc type="string">gregorian</lunardaycalc>
+				<lunarweek>
+					<day1 type="string">Seventhday</day1>
+					<day2 type="string">Firstday</day2>
+					<day3 type="string">Seconday</day3>
+					<day4 type="string">Thirday</day4>
+					<day5 type="string">Forthday</day5>
+					<day6 type="string">Fifthday</day6>
+					<day7 type="string">Sixthday</day7>
+				</lunarweek>
+				<periodvarcalc type="string">gregorian</periodvarcalc>
+				<periods>
+					<period1>
+						<days type="number">31</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">New Year</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Abadius</name>
+					</period1>
+					<period2>
+						<days type="number">28</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Merrymead</name>
+								<startday type="number">2</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Calistril</name>
+					</period2>
+					<period3>
+						<days type="number">31</days>
+						<name type="string">Pharast</name>
+					</period3>
+					<period4>
+						<days type="number">30</days>
+						<name type="string">Gozran</name>
+					</period4>
+					<period5>
+						<days type="number">31</days>
+						<name type="string">Desnus</name>
+					</period5>
+					<period6>
+						<days type="number">30</days>
+						<name type="string">Sarenith</name>
+					</period6>
+					<period7>
+						<days type="number">31</days>
+						<name type="string">Erastus</name>
+					</period7>
+					<period8>
+						<days type="number">31</days>
+						<name type="string">Arodus</name>
+					</period8>
+					<period9>
+						<days type="number">30</days>
+						<name type="string">Rova</name>
+					</period9>
+					<period10>
+						<days type="number">31</days>
+						<name type="string">Lamashan</name>
+					</period10>
+					<period11>
+						<days type="number">30</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Seven Veils</name>
+								<startday type="number">23</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Neth</name>
+					</period11>
+					<period12>
+						<days type="number">31</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Night of the Pale</name>
+								<startday type="number">31</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Kuthona</name>
+					</period12>
+				</periods>
+			</pactstandard>
+			<imperial>
+				<name type="string">Third Imperium Calendar</name>
+				<setting type="string">Traveller - Third Imperium</setting>
+				<dayformat type="string">traveller_imperial</dayformat>
+				<dateformat type="string">traveller_imperial</dateformat>
+				<lunarweek>
+					<day1 type="string">Wonday</day1>
+					<day2 type="string">Tuday</day2>
+					<day3 type="string">Thirday</day3>
+					<day4 type="string">Forday</day4>
+					<day5 type="string">Fiday</day5>
+					<day6 type="string">Sixday</day6>
+					<day7 type="string">Senday</day7>
+					<day8 type="string">Wonday</day8>
+					<day9 type="string">Tuday</day9>
+					<day10 type="string">Thirday</day10>
+					<day11 type="string">Forday</day11>
+					<day12 type="string">Fiday</day12>
+					<day13 type="string">Sixday</day13>
+					<day14 type="string">Senday</day14>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">1</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Holiday</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Holiday</name>
+					</period1>
+					<period2>
+						<days type="number">364</days>
+						<start type="number">2</start>
+						<name type="string">Year</name>
+					</period2>
+				</periods>
+			</imperial>
+			<barovian>
+				<name type="string">Calendar of Barovia (5E)</name>
+				<setting type="string">D&amp;D - Ravenloft</setting>
+				<lunarweek>
+					<day1 type="string">Sunday</day1>
+					<day2 type="string">Monday</day2>
+					<day3 type="string">Tuesday</day3>
+					<day4 type="string">Wednesday</day4>
+					<day5 type="string">Thursday</day5>
+					<day6 type="string">Friday</day6>
+					<day7 type="string">Saturday</day7>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">28</days>
+						<name type="string">First Moon</name>
+					</period1>
+					<period2>
+						<days type="number">28</days>
+						<name type="string">Second Moon</name>
+					</period2>
+					<period3>
+						<days type="number">28</days>
+						<name type="string">Third Moon</name>
+					</period3>
+					<period4>
+						<days type="number">28</days>
+						<name type="string">Fourth Moon</name>
+					</period4>
+					<period5>
+						<days type="number">28</days>
+						<name type="string">Fifth Moon</name>
+					</period5>
+					<period6>
+						<days type="number">28</days>
+						<name type="string">Sixth Moon</name>
+					</period6>
+					<period7>
+						<days type="number">28</days>
+						<name type="string">Seventh Moon</name>
+					</period7>
+					<period8>
+						<days type="number">28</days>
+						<name type="string">Eighth Moon</name>
+					</period8>
+					<period9>
+						<days type="number">28</days>
+						<name type="string">Ninth Moon</name>
+					</period9>
+					<period10>
+						<days type="number">28</days>
+						<name type="string">Tenth Moon</name>
+					</period10>
+					<period11>
+						<days type="number">28</days>
+						<name type="string">Eleventh Moon</name>
+					</period11>
+					<period12>
+						<days type="number">28</days>
+						<name type="string">Twelfth Moon</name>
+					</period12>
+				</periods>
+			</barovian>
+			<ravnica>
+				<name type="string">Calendar of Ravnica</name>
+				<setting type="string">Any</setting>
+				<lunardaycalc type="string">ravnica</lunardaycalc>
+				<lunarweek>
+					<day1 type="string">Matsday</day1>
+					<day2 type="string">Obzsday</day2>
+					<day3 type="string">Nivsday</day3>
+					<day4 type="string">Svogsday</day4>
+					<day5 type="string">Azorsday</day5>
+					<day6 type="string">Rakdsay</day6>
+					<day7 type="string">Razisday</day7>
+				</lunarweek>
+				<periods>
+					<period1>
+						<days type="number">31</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Celebration of the Guildpact</name>
+								<startday type="number">1</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Seleszeni</name>
+					</period1>
+					<period2>
+						<days type="number">30</days>
+						<name type="string">Dhazo</name>
+					</period2>
+					<period3>
+						<days type="number">31</days>
+						<name type="string">Prahz</name>
+					</period3>
+					<period4>
+						<days type="number">30</days>
+						<name type="string">Mokosh</name>
+					</period4>
+					<period5>
+						<days type="number">31</days>
+						<name type="string">Paujal</name>
+					</period5>
+					<period6>
+						<days type="number">31</days>
+						<name type="string">Cizarm</name>
+					</period6>
+					<period7>
+						<days type="number">30</days>
+						<name type="string">Tevnember </name>
+					</period7>
+					<period8>
+						<days type="number">31</days>
+						<name type="string">Golgar</name>
+					</period8>
+					<period9>
+						<days type="number">30</days>
+						<name type="string">Quaegar</name>
+					</period9>
+					<period10>
+						<days type="number">31</days>
+						<name type="string">Xivaskir</name>
+					</period10>
+					<period11>
+						<days type="number">31</days>
+						<name type="string">Griev</name>
+					</period11>
+					<period12>
+						<days type="number">28</days>
+						<holidays>
+							<holiday1>
+								<duration type="number">1</duration>
+								<name type="string">Celebration of the Guildpact</name>
+								<startday type="number">28</startday>
+							</holiday1>
+						</holidays>
+						<name type="string">Zuun</name>
+					</period12>
+				</periods>
+			</ravnica>
+		</base>
+	</calendar>
+</root>
