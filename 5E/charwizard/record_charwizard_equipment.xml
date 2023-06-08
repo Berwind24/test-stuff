@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Please see the license.html file included with this distribution for
+	attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charwizard_sub_equipment">
+		<script file="charwizard/scripts/charwizard_sub_equipment.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<label_charframetop name="background_select_header">
+				<anchored height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="13"/>
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_inventory</icons>
+				<static textres="charwizard_title_equipment" />
+			</label_charframetop>
+
+			<buttoncontrol name="button_select_changechoice">
+				<anchored to="background_select_header" position="insidetopright" offset="15,5" width="150" height="15" />
+				<stateframe>
+					<normal name="buttonup" offset="5,5,5,5" nobaseframe="true" />
+					<pressed name="buttondown" offset="5,5,5,5" nobaseframe="true" />
+				</stateframe>
+				<frame name="buttonup" offset="5,5,5,5" />
+				<font>subwindowsmalltitle</font>
+				<pressed offset="1,1" />
+				<invisible />
+				<script>
+					function onInit()
+						setText("Change Method/Reset");
+					end
+					function onButtonPress()
+						window.startingwealth_label.setVisible(false);
+						window.startingwealth.setVisible(false);
+						window.startingwealth_roll.setVisible(false);
+						window.backgroundkit_header.setVisible(false);
+						window.backgroundkit_expand.setVisible(false);
+						window.classkit_header.setVisible(false);
+						window.classkit_expand.setVisible(false);
+						window.additems_header.setVisible(false);
+						window.additems_expand.setVisible(false);
+
+						window.button_select_startingkit.setVisible(true);
+						window.button_select_startingwealth.setVisible(true);
+						setVisible(false);
+
+						CharWizardManager.character_choices["equipment"] = {};
+						window.update();
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+
+			<buttoncontrol name="button_select_startingkit">
+				<anchored width="150" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="10" />
+					<left anchor="center" offset="-150" />
+				</anchored>
+				<stateframe>
+					<normal name="buttonup" offset="5,5,5,5" nobaseframe="true" />
+					<pressed name="buttondown" offset="5,5,5,5" nobaseframe="true" />
+				</stateframe>
+				<frame name="buttonup" offset="5,5,5,5" />
+				<font>subwindowsmalltitle</font>
+				<pressed offset="1,1" />
+				<script>
+					function onInit()
+						setText("Select Starting Kit");
+					end
+					function onButtonPress()
+						window.update();
+
+						window.backgroundkit_header.setVisible(true);
+						window.backgroundkit_expand.setVisible(true);
+						window.classkit_header.setVisible(true);
+						window.classkit_expand.setVisible(true);
+						window.additems_header.setVisible(true);
+						window.additems_expand.setVisible(true);
+
+						window.button_select_changechoice.setVisible(true);
+						window.button_select_startingwealth.setVisible(false);
+						setVisible(false);
+
+						window.update();
+
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+
+			<buttoncontrol name="button_select_startingwealth">
+				<anchored to="button_select_startingkit" position="righthigh" offset="10,0" width="150" height="20" />
+				<stateframe>
+					<normal name="buttonup" offset="5,5,5,5" nobaseframe="true" />
+					<pressed name="buttondown" offset="5,5,5,5" nobaseframe="true" />
+				</stateframe>
+				<frame name="buttonup" offset="5,5,5,5" />
+				<font>subwindowsmalltitle</font>
+				<pressed offset="1,1" />
+				<script>
+					function onInit()
+						setText("Select Starting Wealth");
+					end
+					function onButtonPress()
+						window.startingwealth_label.setVisible(true);
+						window.startingwealth.setVisible(true);
+						window.startingwealth_roll.setVisible(true);
+						window.additems_header.setVisible(true);
+						window.additems_expand.setVisible(true);
+
+						window.button_select_changechoice.setVisible(true);
+						window.button_select_startingkit.setVisible(false);
+						setVisible(false);
+
+						window.update();
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+
+			<label_column name="startingwealth_label">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<static textres="charwizard_label_startingwealth" />
+				<invisible />
+			</label_column>
+			<string_column name="startingwealth">
+				<anchored width="70">
+					<left parent="startingwealth_label" anchor="right" offset="10" />
+					<right merge="delete" />
+				</anchored>
+				<center />
+				<invisible />
+			</string_column>
+			<button_roll name="startingwealth_roll">
+				<anchored to="startingwealth" width="20" height="20">
+					<top />
+					<left anchor="right" offset="10" />
+				</anchored>
+				<invisible />
+				<script>
+					function onButtonPress()
+						window.handleWealthRoll();
+					end
+				</script>
+			</button_roll>
+
+			<list_column name="currencylist">
+				<anchored>
+					<left offset="15" />
+					<right offset="-1" />
+				</anchored>
+				<class>cw_currencyitem</class>
+				<columns width="115" fillwidth="true" />
+				<noscroll />
+				<child merge="delete" />
+				<script>
+					function onInit()
+						if isEmpty() then
+							CharWizardEquipmentManager.setDefaultCurrencies(self);
+						end
+					end
+
+					function onSortCompare(w1, w2)
+						return CurrencyManager.sortCampaignCurrenciesUsingNames(w1.name.getValue(), w2.name.getValue());
+					end
+				</script>
+			</list_column>
+
+			<header_column name="currentinventory_header">
+				<static textres="charwizard_header_currentinventory" />
+			</header_column>
+			<subwindow name="sub_currentinventory">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="0" />
+					<right offset="-1" />
+				</anchored>
+				<class>sub_charwizard_equipment_currentinv</class>
+				<activate />
+				<fastinit />
+			</subwindow>
+
+			<header_column name="backgroundkit_header">
+				<static textres="charwizard_header_backgroundkit" />
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility("backgroundkit");
+					end
+				</script>
+			</header_column>
+			<buttoncontrol name="backgroundkit_expand">
+				<anchored to="backgroundkit_header" position="righthigh" offset="-20,0" width="20" height="20" />
+				<state icon="button_expand" />
+				<state icon="button_collapse" />
+				<invisible />
+				<default>1</default>
+				<script>
+					function onClickRelease()
+						window.updateVisibility("backgroundkit");
+
+						return false
+					end
+				</script>
+			</buttoncontrol>
+
+			<hnc name="background_gold" />
+			<buttoncontrol name="button_addbackgold">
+				<anchored to="background_gold" position="righthigh" offset="10,0" width="20" height="20" />
+				<state icon="button_dialog_ok" />
+				<state icon="button_dialog_ok_down" />
+				<invisible />
+				<script>
+					function onValueChanged()
+						local nBackGold = window.background_gold.getValue();
+						for _,v in pairs(window.currencylist.getWindows()) do
+							if v.name.getValue():lower() == "gp" then
+								local nCurrentGold = v.amount.getValue();
+
+								if getValue() == 1 then
+									v.amount.setValue(nCurrentGold + nBackGold);
+								else
+									v.amount.setValue(nCurrentGold - nBackGold);
+								end
+
+								return true
+							end
+						end
+					end
+				</script>
+			</buttoncontrol>
+			<subwindow name="sub_backgroundkit">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="0" />
+					<right offset="-5" />
+				</anchored>
+				<class>sub_charwizard_equipment_kit</class>
+				<activate />
+			</subwindow>
+
+			<header_column name="classkit_header">
+				<static textres="charwizard_header_classkit" />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility("classkit");
+					end
+				</script>
+				<invisible />
+			</header_column>
+			<buttoncontrol name="classkit_expand">
+				<anchored to="classkit_header" position="righthigh" offset="-20,0" width="20" height="20" />
+				<state icon="button_expand" />
+				<state icon="button_collapse" />
+				<default>1</default>
+				<invisible />
+				<script>
+					function onClickRelease()
+						window.updateVisibility("classkit");
+
+						return false
+					end
+				</script>
+			</buttoncontrol>
+
+			<subwindow name="sub_classkit">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="0" />
+					<right offset="-5" />
+				</anchored>
+				<class>sub_charwizard_equipment_kit</class>
+				<activate />
+			</subwindow>
+
+			<header_column name="additems_header">
+				<static textres="charwizard_header_additems" />
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility("additems");
+					end
+				</script>
+			</header_column>
+			<buttoncontrol name="additems_expand">
+				<anchored to="additems_header" position="righthigh" offset="-20,0" width="20" height="20" />
+				<state icon="button_expand" />
+				<state icon="button_collapse" />
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility("additems");
+
+						return false
+					end
+				</script>
+			</buttoncontrol>
+			<subwindow name="sub_additems">
+				<anchored height="240">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="0" />
+					<right offset="-5" />
+				</anchored>
+				<class>sub_charwizard_equipment_additems</class>
+				<invisible />
+			</subwindow>
+			<scrollbar>
+				<anchored to="sub_additems" offset="-20,0" />
+				<target>sub_additems</target>
+			</scrollbar>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="sub_charwizard_equipment_kit">
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<windowlist name="kit_list">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="30" />
+					<right offset="-20" />
+				</anchored>
+				<class>list_entry_charwizard_kitselection</class>
+				<empty><textres>emptyset</textres></empty>
+				<sortby><control>type</control></sortby>
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_kitselection">
+		<margins control="0,0,0,2" />
+		<frame>groupbox</frame>
+		<script file="charwizard/scripts/equipment_sub_kit.lua" />
+		<sheetdata>
+			<hsc name="selectionlink" />
+
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+
+			<stringcontrol name="selection">
+				<anchored width="190">
+					<top offset="10" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+			</stringcontrol>
+
+			<button_idelete name="button_modify">
+				<anchored to="rightanchor" width="20" height="20">
+					<top offset="10" />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<invisible />
+				<script>
+					function onButtonPress()
+						local sKitType = window.getKitType();
+						local tEquipment = CharWizardManager.character_choices["equipment"];
+						local sItemRecord = window.selectionlink.getValue();
+
+						for k,vItem in ipairs(tEquipment[sKitType .. "items"]) do
+							if DB.getPath(vItem.item) == sItemRecord then
+								tEquipment[sKitType .. "items"][k] = nil;
+
+								break
+							end
+						end
+
+						window.selection.setValue();
+						window.selectionlink.setValue();
+						setVisible(false);
+
+						window.list.setVisible(true);
+						ListManager.refreshDisplayList(window);
+
+						local wTop = UtilityManager.getTopWindow(window);
+						wTop.sub_equipment.subwindow.sub_currentinventory.subwindow.rebuildList();
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</button_idelete>
+
+			<label name="type">
+				<anchored>
+					<top offset="10" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+				<invisible />
+			</label>
+
+			<genericcontrol name="alert">
+				<anchored position="insidetopleft" width="20" height="20">
+					<top offset="10" />
+					<left offset="10" />
+				</anchored>
+				<icon>button_alert</icon>
+				<invisible />
+			</genericcontrol>
+
+			<windowlist name="list">
+				<anchored>
+					<top parent="type" anchor="bottom" relation="relative" offset="7" />
+					<left offset="15" />
+					<right offset="-5" />
+				</anchored>
+				<columns width="150" fillwidth="true"/>
+				<class>list_entry_charwizard_kitchoice</class>
+			</windowlist>
+
+			<genericcontrol name="listbottomanchor">
+				<anchored to="list" height="0">
+					<top anchor="bottom" relation="relative" offset="15" />
+					<left />
+					<right />
+				</anchored>
+			</genericcontrol>
+
+			<masterindex_anchor_paging name="pageanchor" />
+			<list_page_info name="page_info" />
+			<list_page_start name="page_start" />
+			<list_page_prev name="page_prev" />
+			<list_page_next name="page_next" />
+			<list_page_end name="page_end" />
+
+			<genericcontrol name="spacer">
+				<anchored width="0" height="7">
+					<top parent="pageanchor" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_kitchoice">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<windowreferencecontrol name="link">
+				<bounds>0,0,0,0</bounds>
+				<class>item</class>
+				<invisible />
+			</windowreferencecontrol>
+
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<numbercontrol name="count">
+				<anchored width="30" height="20">
+					<top offset="5" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<readonly />
+				<invisible />
+			</numbercontrol>
+
+			<stringc_list_link_base name="name">
+				<anchored>
+					<top offset="2" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+				<linktarget>link</linktarget>
+			</stringc_list_link_base>
+
+			<buttoncontrol name="button_select">
+				<anchored position="insidetopleft" offset="10,2" width="20" height="20" />
+				<icon normal="button_add" pressed="button_add_down" />
+				<script>
+					function onButtonPress()
+						local sKitType = window.windowlist.window.getKitType();
+						local wChoiceList = window.windowlist;
+						local tEquipment = CharWizardManager.character_choices["equipment"];
+
+						if not tEquipment[sKitType .. "items"] then
+							tEquipment[sKitType .. "items"] = {};
+						end
+
+						local _,sItemRecord = window.link.getValue();
+						table.insert(tEquipment[sKitType .. "items"], { item = DB.findNode(sItemRecord), count = 1 });
+
+						window.windowlist.window.selection.setValue(window.name.getValue());
+						window.windowlist.window.selectionlink.setValue(sItemRecord);
+						window.windowlist.window.button_modify.setVisible(true);
+						window.windowlist.setVisible(false);
+						window.windowlist.window.pageanchor.setVisible(false);
+						window.windowlist.window.page_info.setVisible(false);
+						window.windowlist.window.page_start.setVisible(false);
+						window.windowlist.window.page_prev.setVisible(false);
+						window.windowlist.window.page_next.setVisible(false);
+						window.windowlist.window.page_next.setVisible(false);
+						window.windowlist.window.page_end.setVisible(false);
+
+						window.windowlist.window.spacer.setVisible(false);
+
+						local wTop = UtilityManager.getTopWindow(window);
+						wTop.sub_equipment.subwindow.sub_currentinventory.subwindow.rebuildList();
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="cw_currencyitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored height="0" width="0">
+					<top offset="2" />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored to="rightanchor">
+					<top />
+					<right anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</button_idelete>
+
+			<basicnumberc name="amount">
+				<anchored to="rightanchor" width="40" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<description field="name" />
+				<delaykeyupdate />
+				<script>
+					local bUpdating = false
+					function onValueChanged()
+						if bUpdating then
+							return
+						end
+
+						bUpdating = true;
+
+						CharWizardEquipmentManager.updateCurrencyAmount(window);
+
+						bUpdating = false;
+					end
+				</script>
+			</basicnumberc>
+
+			<simplestringc name="name">
+				<anchored>
+					<top offset="5" />
+					<left offset="5" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<readonly />
+				<center />
+			</simplestringc>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="sub_charwizard_equipment_currentinv">
+		<script file="charwizard/scripts/equipment_sub_currentitems.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<windowlist name="list">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="0" />
+					<right offset="-5" />
+				</anchored>
+				<class>charwizard_equipment_currentinvlist_entry_item</class>
+				<empty><textres>charwizard_empty_inventory</textres></empty>
+				<sortby><control>name</control></sortby>
+				<columns width="190" fillwidth="true" />
+			</windowlist>
+
+			<genericcontrol name="listbottomanchor">
+				<anchored to="list" height="0">
+					<top anchor="bottom" relation="relative" offset="15" />
+					<left />
+					<right />
+				</anchored>
+			</genericcontrol>
+
+			<masterindex_anchor_paging name="pageanchor" />
+			<list_page_info name="page_info" />
+			<list_page_start name="page_start" />
+			<list_page_prev name="page_prev" />
+			<list_page_next name="page_next" />
+			<list_page_end name="page_end" />
+
+			<genericcontrol name="spacer">
+				<anchored width="0" height="7">
+					<top parent="pageanchor" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charwizard_equipment_currentinvlist_entry_item">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<windowreferencecontrol name="link">
+				<bounds>0,0,0,0</bounds>
+				<class>item</class>
+				<invisible />
+			</windowreferencecontrol>
+
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top offset="2" />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+
+			<button_idelete name="idelete">
+				<anchored to="rightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<script>
+					function onInit()
+						local tEquipment = CharWizardManager.character_choices["equipment"];
+						local _,sRecord = window.link.getValue();
+						local bShow = true;
+						if tEquipment.classitems and next(tEquipment.classitems) then
+							for _,v in pairs(tEquipment.classitems) do
+								if DB.getPath(v.item) == sRecord then
+									bShow = false;
+								end
+							end
+						end
+
+						if tEquipment.backgrounditems and next(tEquipment.backgrounditems) then
+							for _,v in pairs(tEquipment.backgrounditems) do
+								if DB.getPath(v.item) == sRecord then
+									bShow = false;
+								end
+							end
+						end
+
+						if window.count.getValue() > 1 then
+							bShow = true;
+						end
+
+						setVisibility(bShow);
+					end
+					function onButtonPress()
+						local _,sRecord = window.link.getValue();
+						if getValue() == 0 then
+							window.windowlist.window.onChildDeleted(DB.findNode(sRecord));
+						end
+					end
+				</script>
+			</button_idelete>
+
+			<stringc_list_link_base name="name">
+				<anchored>
+					<top offset="2" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+				<linktarget>link</linktarget>
+			</stringc_list_link_base>
+
+			<numberc_static name="count">
+				<anchored position="insidetopleft" width="20" height="20">
+					<left offset="10" />
+					<top offset="2" />
+				</anchored>
+			</numberc_static>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="sub_charwizard_equipment_additems">
+		<script file="charwizard/scripts/equipment_sub_additems.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<buttoncontrol name="button_weapon">
+				<anchored width="150" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="15" />
+					<left anchor="center" offset="-75" />
+				</anchored>
+				<state textres="charwizard_label_weapon" frame="buttonup" frameoffset="5,5,5,5" />
+				<state frame="buttondown" frameoffset="5,5,5,5" />
+				<font>subwindowsmalltitle</font>
+				<pressed offset="1,1" />
+				<script>
+					function onButtonPress()
+						local sName = getName():gsub("button_", "");
+
+						window.button_armor.setValue(0);
+						window.button_gear.setValue(0);
+
+						if getValue() == 0 then
+							sName = "";
+						end
+
+						window.onFilterChanged(sName);
+					end
+				</script>
+			</buttoncontrol>
+
+			<buttoncontrol name="button_gear">
+				<anchored to="button_weapon" position="lefthigh" offset="10,0" width="150" height="20" />
+				<state textres="charwizard_label_gear" frame="buttonup" frameoffset="5,5,5,5" />
+				<state frame="buttondown" frameoffset="5,5,5,5" />
+				<font>subwindowsmalltitle</font>
+				<script>
+					function onButtonPress()
+						local sName = getName():gsub("button_", "");
+
+						window.button_armor.setValue(0);
+						window.button_weapon.setValue(0);
+
+						if getValue() == 0 then
+							sName = "";
+						end
+
+						window.onFilterChanged(sName);
+					end
+				</script>
+			</buttoncontrol>
+
+			<buttoncontrol name="button_armor">
+				<anchored to="button_weapon" position="righthigh" offset="10,0" width="150" height="20" />
+				<state textres="charwizard_label_armor" frame="buttonup" frameoffset="5,5,5,5" />
+				<state frame="buttondown" frameoffset="5,5,5,5" />
+				<font>subwindowsmalltitle</font>
+				<script>
+					function onButtonPress()
+						local sName = getName():gsub("button_", "");
+
+						window.button_gear.setValue(0);
+						window.button_weapon.setValue(0);
+
+						if getValue() == 0 then
+							sName = "";
+						end
+
+						window.onFilterChanged(sName);
+					end
+				</script>
+			</buttoncontrol>
+
+			<filter name="filter_name">
+				<anchored height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="60" />
+					<right offset="-70" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						super.onValueChanged();
+						window.onNameFilterChanged(getValue());
+					end
+				</script>
+			</filter>
+
+			<windowlist name="list">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="15" />
+					<right offset="-25" />
+				</anchored>
+				<class>charwizard_equipment_itemlist_entry_item</class>
+				<child merge="delete" />
+				<empty textres="emptyset" />
+				<sortby control="name" />
+				<readonly />
+				<script>
+					function onListChanged()
+						window.onListChanged();
+					end
+
+					function onSortCompare(w1, w2)
+						return window.onSortCompare(w1, w2);
+					end
+				</script>
+			</windowlist>
+
+			<genericcontrol name="listbottomanchor">
+				<anchored to="list" height="0">
+					<left />
+					<right />
+					<top anchor="bottom" relation="relative" offset="15" />
+				</anchored>
+			</genericcontrol>
+
+			<masterindex_anchor_paging name="pageanchor" />
+			<list_page_info name="page_info" />
+			<list_page_start name="page_start" />
+			<list_page_prev name="page_prev" />
+			<list_page_next name="page_next" />
+			<list_page_end name="page_end" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charwizard_equipment_itemlist_entry_item">
+		<margins control="0,0,0,0" />
+		<sheetdata>
+			<linkcontrol name="link">
+				<bounds>0,0,0,0</bounds>
+				<class>item</class>
+				<invisible />
+			</linkcontrol>
+
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			<buttoncontrol name="selecteditem_iadd">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<icon normal="button_selectedspell_add" pressed="button_selectedspell_add_down" />
+				<tooltip textres="" />
+				<script>
+					function onButtonPress()
+						local sClass, sRecord = window.link.getValue();
+						local tEquipment = CharWizardManager.character_choices["equipment"];
+						if not tEquipment.additems then
+							tEquipment.additems = {};
+						end
+
+						table.insert(tEquipment.additems, { item = DB.findNode(sRecord), count = 1 });
+
+						local wTop = UtilityManager.getTopWindow(window);
+						wTop.sub_equipment.subwindow.sub_currentinventory.subwindow.rebuildList();
+					end
+				</script>
+			</buttoncontrol>
+
+			<stringcontrol name="cost">
+				<anchored>
+					<top offset="4" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<readonly />
+			</stringcontrol>
+
+			<stringc_list_link_base name="name">
+				<anchored>
+					<top offset="2" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+			</stringc_list_link_base>
+		</sheetdata>
+	</windowclass>
+</root>

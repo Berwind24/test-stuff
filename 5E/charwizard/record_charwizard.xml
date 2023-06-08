@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Please see the license.html file included with this distribution for
+	attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charwizard">
+		<frame>utilitybox3</frame>
+		<placement>
+			<size width="660" height="600" />
+		</placement>
+		<sizelimits>
+			<minimum width="660" height="600" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_char</minimize>
+		<script>
+			function onInit()
+				CharWizardManager.character_choices = {
+					["race"] = {},
+					["class"] = {},
+					["abilities"] = {},
+					["background"] = {},
+					["equipment"] = {},
+					["abilityscore"] = {};
+					["import"] = {};
+				};
+			end
+		</script>
+		<sheetdata>
+			<windowtitlebar name="title">
+				<resource>charwizard_title</resource>
+			</windowtitlebar>
+			<anchor_title_utilitybox3 name="contentanchor" />
+
+			<sub_charwizard_steps name="sub_step_buttons" />
+
+			<sub_charwizard name="sub_race">
+				<class>charwizard_sub_race</class>
+				<activate />
+			</sub_charwizard>
+			<sub_charwizard name="sub_class">
+				<class>charwizard_sub_class</class>
+			</sub_charwizard>
+			<sub_charwizard name="sub_abilities">
+				<class>charwizard_sub_abilities</class>
+			</sub_charwizard>
+			<sub_charwizard name="sub_background">
+				<class>charwizard_sub_background</class>
+			</sub_charwizard>
+			<sub_charwizard name="sub_equipment">
+				<class>charwizard_sub_equipment</class>
+			</sub_charwizard>
+			<sub_charwizard name="sub_commit">
+				<class>charwizard_sub_commit</class>
+			</sub_charwizard>
+
+			<scrollbar>
+				<anchored to="sub_race" />
+				<target>sub_race</target>
+			</scrollbar>
+			<scrollbar>
+				<anchored to="sub_class" />
+				<target>sub_class</target>
+			</scrollbar>
+			<scrollbar>
+				<anchored to="sub_abilities" />
+				<target>sub_abilities</target>
+			</scrollbar>
+			<scrollbar>
+				<anchored to="sub_background" />
+				<target>sub_background</target>
+			</scrollbar>
+			<scrollbar>
+				<anchored to="sub_equipment" />
+				<target>sub_equipment</target>
+			</scrollbar>
+			<scrollbar>
+				<anchored to="sub_commit" />
+				<target>sub_commit</target>
+			</scrollbar>
+
+			<resize_utilitybox3 />
+			<close_utilitybox3 />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="sub_charwizard_step_buttons">
+		<margins control="0,0,0,5" />
+		<sheetdata>
+			<button_charwizard_tab name="button_race" >
+				<anchored position="insidetopleft" offset="15,10" width="86" height="36" />
+				<script>
+					function onInit()
+						setFrame("buttondown", 5, 5, 5, 5);
+					end
+				</script>
+				<state textres="charwizard_label_race" />
+			</button_charwizard_tab>
+			<button_charwizard_tab name="button_class" >
+				<anchored width="86" height="36">
+					<top parent="button_race" />
+					<left parent="button_race" anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<state textres="charwizard_label_class" />
+			</button_charwizard_tab>
+			<button_charwizard_tab name="button_abilities" >
+				<anchored width="86" height="36">
+					<top parent="button_race" />
+					<left parent="button_race" anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<state textres="charwizard_label_abilities" />
+			</button_charwizard_tab>
+			<button_charwizard_tab name="button_background" >
+				<anchored width="86" height="36">
+					<top parent="button_race" />
+					<left parent="button_race" anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<state textres="charwizard_label_background" />
+			</button_charwizard_tab>
+			<button_charwizard_tab name="button_equipment" >
+				<anchored width="86" height="36">
+					<top parent="button_race" />
+					<left parent="button_race" anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<state textres="charwizard_label_equipment" />
+			</button_charwizard_tab>
+			<button_charwizard_tab name="button_commit" >
+				<anchored width="86" height="36">
+					<top parent="button_race" />
+					<left parent="button_race" anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<state textres="charwizard_label_commit" />
+			</button_charwizard_tab>
+		</sheetdata>
+	</windowclass>
+</root>

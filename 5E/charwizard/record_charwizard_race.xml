@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Please see the license.html file included with this distribution for
+	attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charwizard_sub_race">
+		<margins control="0,0,0,2" />
+		<script>
+			function update()
+				for _,v in pairs(race_decisions_list.getWindows()) do
+					for _,v2 in pairs(v.decisions_list.getWindows()) do
+						local sDecision = v2.decision.getValue();
+						sDecision = sDecision:gsub("Select ", ""):lower();
+
+						if sDecision ~= "option" then
+							CharWizardRaceManager.processRaceDecision(v2);
+						end
+					end
+				end
+
+				CharWizardManager.updateAlerts();
+			end
+		</script>
+		<sheetdata>
+			<label_charframetop name="race_select_header">
+				<anchored height="20">
+					<top offset="10"/>
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_race</icons>
+			</label_charframetop>
+
+			<buttoncontrol name="button_changerace">
+				<anchored position="insidetopright" offset="25,10" width="90" height="15" />
+				<stateframe>
+					<normal name="buttonup" offset="5,5,5,5" nobaseframe="true" />
+					<pressed name="buttondown" offset="5,5,5,5" nobaseframe="true" />
+				</stateframe>
+				<frame name="buttonup" offset="5,5,5,5" />
+				<font>subwindowsmalltitle</font>
+				<pressed offset="1,1" />
+				<state textres="charwizard_label_changerace" />
+				<invisible />
+				<script>
+					function onButtonPress()
+						CharWizardManager.character_choices["race"] = {};
+
+						window.race_decisions_list.closeAll();
+						window.race_select_header.setValue();
+
+						setVisible(false);
+
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+
+			<comboboxc name="filter_race">
+				<anchored width="270" height="20">
+					<top parent="race_select_header" anchor="bottom" relation="relative" offset="7" />
+					<left offset="100" />
+				</anchored>
+				<listdirection >down</listdirection>
+                <listmaxsize>16</listmaxsize>
+				<script>
+					function onValueChanged()
+						window.sub_raceselection.subwindow.onFilterChanged(getValue());
+					end
+				</script>
+			</comboboxc>
+			<label name="filter_race_label">
+				<anchored to="filter_race" position="lefthigh" offset="10" height="20" />
+				<static textres="charwizard_label_filtersource" />
+			</label>
+			<filter name="filter_name">
+				<anchored height="20">
+					<top parent="race_select_header" anchor="bottom" relation="relative" offset="7" />
+					<left offset="60" />
+					<right offset="-70" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						super.onValueChanged();
+						window.sub_raceselection.subwindow.onNameFilterChanged(getValue());
+					end
+				</script>
+			</filter>
+
+			<subwindow name="sub_raceselection">
+				<anchored>
+					<top parent="race_select_header" anchor="bottom" relation="relative" offset="7" />
+					<left offset="0" />
+					<right offset="-1" />
+				</anchored>
+				<class>sub_charwizard_race_raceselection</class>
+				<activate />
+				<fastinit />
+			</subwindow>
+
+			<windowlist name="race_decisions_list">
+				<anchored>
+					<top parent="race_select_header" anchor="bottom" relation="relative" offset="7" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<class>list_entry_charwizard_racetraits</class>
+				<sortby><control>trait</control></sortby>
+				<script>
+					function onListChanged()
+						window.filter_race_label.setVisible(isEmpty());
+						window.filter_race.setComboBoxVisible(isEmpty());
+						window.filter_name.setVisible(isEmpty());
+						window.button_changerace.setVisible(not isEmpty());
+						window.sub_raceselection.setVisible(isEmpty());
+
+						--[[CharWizardManager.updateAlerts();--]]
+					end
+				</script>
+			</windowlist>
+			<scrollbar>
+				<anchored to="race_decisions_list" />
+				<target>race_decisions_list</target>
+			</scrollbar>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="sub_charwizard_race_raceselection">
+		<margins control="0,0,0,2" />
+		<script file="charwizard/scripts/race_sub_raceselections.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<windowlist name="list">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="10" />
+					<right offset="-15" />
+				</anchored>
+				<class>list_entry_charwizard_raceselection</class>
+				<empty><textres>charwizard_empty_inventory</textres></empty>
+				<script>
+					function onSortCompare(w1, w2)
+						return window.onSortCompare(w1, w2);
+					end
+                </script>
+			</windowlist>
+
+			<genericcontrol name="listbottomanchor">
+				<anchored to="list" height="0">
+					<top anchor="bottom" relation="relative" offset="15" />
+					<left />
+					<right />
+				</anchored>
+			</genericcontrol>
+
+			<masterindex_anchor_paging name="pageanchor" />
+			<list_page_info name="page_info" />
+			<list_page_start name="page_start" />
+			<list_page_prev name="page_prev" />
+			<list_page_next name="page_next" />
+			<list_page_end name="page_end" />
+
+			<genericcontrol name="spacer">
+				<anchored width="0" height="7">
+					<top parent="pageanchor" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_raceselection">
+		<margins control="0,0,10,10" />
+		<frame>groupbox</frame>
+		<script>
+			function updateVisibility()
+				if button_expand.isVisible() then
+					subrace_list.setVisible(not subrace_list.isVisible());
+
+					if subrace_list.isVisible() then
+						button_expand.setValue(1);
+					else
+						button_expand.setValue(0);
+					end
+				end
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<linkcontrol name="shortcut">
+				<anchored to="rightanchor" width="20" height="20">
+					<top offset="10" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<class>reference_race</class>
+				<readonly />
+				<invisible />
+			</linkcontrol>
+			<buttoncontrol name="button_expand">
+				<anchored to="rightanchor" width="40" height="20">
+					<top offset="10" />
+					<right anchor="left" offset="-10" />
+				</anchored>
+				<state icon="button_expand" />
+				<state icon="button_collapse" />
+				<invisible />
+				<script>
+					function onButtonPress()
+						window.updateVisibility();
+					end
+				</script>
+			</buttoncontrol>
+
+			<label name="module">
+				<anchored width="300">
+					<top offset="10" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</label>
+
+			<stringc_list_link_base name="name">
+				<anchored>
+					<top offset="10" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<linktarget>shortcut</linktarget>
+			</stringc_list_link_base>
+			<buttoncontrol name="button_select">
+				<anchored position="insidetopleft" offset="10,10" width="20" height="20" />
+				<icon normal="button_add" pressed="button_add_down" />
+				<invisible />
+				<script>
+					function onButtonPress()
+						CharWizardRaceManager.processRace(window);
+					end
+				</script>
+			</buttoncontrol>
+
+			<windowlist name="subrace_list">
+				<anchored>
+					<top parent="name" anchor="bottom" relation="relative" offset="10" />
+					<left offset="40" />
+					<right offset="-5" />
+				</anchored>
+				<class>list_entry_charwizard_subraceselection</class>
+				<columns width="205" fillwidth="true" />
+				<noscroll />
+				<invisible />
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_subraceselection">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<linkcontrol name="shortcut">
+				<anchored to="rightanchor" width="20" height="20">
+					<top offset="2" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<class>reference_race</class>
+				<readonly />
+				<invisible />
+			</linkcontrol>
+
+			<stringc_list_link_base name="name">
+				<anchored>
+					<top offset="2" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<linktarget>shortcut</linktarget>
+			</stringc_list_link_base>
+			<buttoncontrol name="button_select">
+				<anchored position="insidetopleft" offset="10,2" width="20" height="20" />
+				<icon normal="button_add" pressed="button_add_down" />
+				<invisible />
+				<script>
+					function onButtonPress()
+						CharWizardRaceManager.processRace(window);
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_racetraits">
+		<margins control="0,0,10,10" />
+		<frame>groupbox</frame>
+		<script>
+			function updateVisibility()
+				if button_expand.isVisible() then
+					decisions_list.setVisible(not decisions_list.isVisible());
+					trait_desc.setVisible(not trait_desc.isVisible());
+
+					if decisions_list.isVisible() then
+						button_expand.setValue(1);
+					else
+						button_expand.setValue(0);
+					end
+				end
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<linkcontrol name="shortcut">
+				<anchored to="rightanchor" width="20" height="20">
+					<top offset="10" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<class>reference_racialtrait</class>
+				<readonly />
+				<invisible />
+				<script>
+					function onDragStart(button, x, y, draginfo)
+						return false;
+					end
+				</script>
+			</linkcontrol>
+
+			<buttoncontrol name="button_expand">
+				<anchored to="rightanchor" width="40" height="20">
+					<top offset="10" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<state icon="button_expand" />
+				<state icon="button_collapse" />
+				<invisible />
+				<script>
+					function onButtonPress()
+						window.updateVisibility();
+					end
+				</script>
+			</buttoncontrol>
+
+			<label name="level">
+				<anchored width="190">
+					<top offset="10" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</label>
+
+			<label name="trait">
+				<anchored>
+					<top offset="10" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</label>
+
+			<genericcontrol name="alert">
+				<anchored position="insidetopleft" width="20" height="20">
+					<top offset="10" />
+					<left offset="10" />
+				</anchored>
+				<icon>button_alert</icon>
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</genericcontrol>
+
+			<formattedtextcontrol name="trait_desc">
+				<anchored>
+					<top parent="trait" anchor="bottom" relation="relative" offset="10" />
+					<left offset="55" />
+					<right offset="-5" />
+				</anchored>
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</formattedtextcontrol>
+
+			<windowlist name="decisions_list">
+				<anchored>
+					<top parent="trait" anchor="bottom" relation="relative" offset="10" />
+					<left offset="15" />
+					<right offset="-5" />
+				</anchored>
+				<class>list_entry_charwizard_trait_decisions</class>
+				<noscroll />
+				<invisible />
+				<script>
+					function onListChanged()
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_trait_decisions">
+		<margins control="0,0,10,10" />
+		<frame>groupbox</frame>
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<label name="choice">
+				<anchored width="150">
+					<top offset="10" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+			</label>
+
+			<button_idelete name="button_modify">
+				<anchored to="rightanchor" width="20" height="20">
+					<top offset="7" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<script>
+					function onButtonPress()
+						if getValue() == 0 then
+							local tRace = CharWizardManager.character_choices["race"];
+							local sFeat = window.choice.getValue();
+
+							tRace.feat = nil;
+
+							window.choice.setValue();
+							setVisible(false);
+							window.sub_decision_choice.setVisible(true);
+							window.sub_decision_choice.subwindow.rebuildList();
+
+							CharWizardManager.updateAlerts();
+						end
+					end
+				</script>
+			</button_idelete>
+
+			<label name="decision">
+				<anchored>
+					<top offset="10" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<invisible />
+			</label>
+
+			<genericcontrol name="alert">
+				<anchored position="insidetopleft" width="20" height="20">
+					<top offset="10" />
+					<left offset="10" />
+				</anchored>
+				<icon>button_alert</icon>
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</genericcontrol>
+
+			<formattedtextcontrol name="decision_desc">
+				<anchored>
+					<top parent="decision" anchor="bottom" relation="relative" offset="10" />
+					<left offset="55" />
+					<right offset="-5" />
+				</anchored>
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</formattedtextcontrol>
+
+			<comboboxc name="decision_choice">
+				<anchored>
+					<top parent="decision" anchor="bottom" relation="relative" offset="10" />
+					<left offset="40" />
+					<right offset="-5" />
+				</anchored>
+				<listdirection>down</listdirection>
+				<listmaxsize>6</listmaxsize>
+				<invisible />
+				<script>
+					function onValueChanged()
+						CharWizardRaceManager.processRaceDecision(window);
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</comboboxc>
+
+			<subwindow name="sub_decision_choice">
+				<anchored>
+					<top parent="decision" anchor="bottom" relation="relative" offset="10" />
+					<left offset="40" />
+					<right offset="-5" />
+				</anchored>
+				<class>decision_sub_racefeat_choice</class>
+			</subwindow>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="decision_sub_racefeat_choice">
+		<script file="charwizard/scripts/decision_sub_feat_choice.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<filter name="filter">
+				<anchored>
+					<left offset="40" />
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<right offset="-70" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						super.onValueChanged();
+						window.onNameFilterChanged(getValue());
+					end
+				</script>
+			</filter>
+
+			<windowlist name="list">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<class>list_entry_decision_racefeat</class>
+				<columns width="205" fillwidth="true" />
+				<script>
+					function onSortCompare(w1, w2)
+						return window.onSortCompare(w1, w2);
+					end
+				</script>
+			</windowlist>
+
+			<genericcontrol name="listbottomanchor">
+				<anchored to="list" height="0">
+					<left />
+					<right />
+					<top anchor="bottom" relation="relative" offset="15" />
+				</anchored>
+			</genericcontrol>
+
+			<masterindex_anchor_paging name="pageanchor" />
+			<list_page_info name="page_info" />
+			<list_page_start name="page_start" />
+			<list_page_prev name="page_prev" />
+			<list_page_next name="page_next" />
+			<list_page_end name="page_end" />
+
+			<genericcontrol name="spacer">
+				<anchored width="0" height="7">
+					<top parent="pageanchor" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_decision_racefeat">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<stringc_list_link_base name="name">
+				<anchored position="insidetop">
+					<left offset="35" />
+					<top offset="7" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<linktarget>link</linktarget>
+				<font name="sheettext" />
+				<readonly />
+			</stringc_list_link_base>
+			<linkcontrol name="link">
+				<bounds>0,0,0,0</bounds>
+				<class>reference_feat</class>
+			</linkcontrol>
+
+			<buttoncontrol name="button_select">
+				<anchored position="insidetopleft" offset="10,7" width="20" height="20" />
+				<icon normal="button_add" pressed="button_add_down" />
+				<script>
+					function onButtonPress()
+						local tRace = CharWizardManager.character_choices["race"];
+						if not tRace.feat then
+							tRace.feat = {};
+						end
+
+						local sFeat = window.name.getValue();
+						tRace.feat = sFeat:lower();
+
+						window.windowlist.window.parentcontrol.window.choice.setValue(sFeat);
+						window.windowlist.window.parentcontrol.window.button_modify.setVisible(true);
+						window.windowlist.window.parentcontrol.setVisible(false);
+						window.windowlist.window.rebuildList();
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+</root>

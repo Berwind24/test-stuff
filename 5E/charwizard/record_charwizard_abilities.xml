@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Please see the license.html file included with this distribution for
+	attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charwizard_sub_abilities">
+		<margins control="0,0,0,7" />
+		<script>
+			function onInit()
+				ActionsManager.registerResultHandler("charwizardabilityroll", onRoll);
+
+				update();
+			end
+			function handleGenRoll()
+				for k,v in pairs(DataCommon.abilities) do
+					self[v .. "_base"].setValue(0);
+
+					local rRoll = { sType = "charwizardabilityroll", sDesc = "[ABILITY SCORE GENERATION] " .. StringManager.capitalize(v), nMod = 0 };
+					rRoll.aDice = { expr = "4d6d1" }
+					rRoll.sAbility = v;
+
+					ActionsManager.actionDirect(nil, "charwizardabilityroll", { rRoll }, {{}});
+				end
+			end
+			function onRoll(rSource, rTarget, rRoll)
+				local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
+				Comm.deliverChatMessage(rMessage);
+
+				self[rRoll.sAbility .. "_base"].setValue(ActionsManager.total(rRoll));
+			end
+			function update()
+				CharWizardAbilitiesManager.updateRaceAbilities(self);
+				CharWizardAbilitiesManager.updateASIAbilities(self);
+			end
+		</script>
+		<sheetdata>
+			<label_charframetop name="abilities_select_header">
+				<anchored height="20">
+					<top offset="10"/>
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_stats</icons>
+				<static textres="charwizard_title_abilityscores" />
+			</label_charframetop>
+
+			<comboboxc name="cb_genmethod">
+				<anchored width="150" height="20">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="15" />
+					<left offset="85" />
+				</anchored>
+				<listdirection >down</listdirection>
+				<center />
+				<script>
+					function onInit()
+						addItems(CharWizardData.genmethod);
+					end
+					function onValueChanged()
+						CharWizardAbilitiesManager.setGenMethod(window);
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</comboboxc>
+			<label>
+				<anchored to="cb_genmethod" position="lefthigh" offset="10,0" width="60" />
+				<static textres="charwizard_label_method" />
+			</label>
+
+			<button_roll name="cb_genroll">
+				<anchored to="cb_genmethod" position="righthigh" offset="10,-10" width="40" height="40" />
+				<invisible />
+				<script>
+					function onButtonPress()
+						window.handleGenRoll();
+					end
+				</script>
+			</button_roll>
+
+			<label name="point_label">
+				<anchored to="cb_genmethod" position="righthigh" offset="40,0" />
+				<static textres="charwizard_label_pointsremaining" />
+				<invisible />
+			</label>
+			<numbercontrol name="points_used">
+				<anchored to="point_label" position="righthigh" offset="10,0" width="40" height="20" />
+				<invisible />
+			</numbercontrol>
+			<label name="pointbuy_label">
+				<anchored to="points_used" position="righthigh" offset="5,0" />
+				<invisible />
+				<static>/</static>
+			</label>
+			<numbercontrol name="points_max">
+				<anchored to="points_used" position="righthigh" offset="20,0" width="40" height="20" />
+				<invisible />
+				<default>27</default>
+				<readonly />
+			</numbercontrol>
+
+			<!-- Totals -->
+			<basicnumberc name="constitution_total">
+				<anchored width="60" height="60">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="25" />
+					<left anchor="center" offset="-65" />
+				</anchored>
+				<default>10</default>
+				<modifiersize>mini</modifiersize>
+				<nodrag />
+				<readonly />
+			</basicnumberc>
+			<label_abilityscore>
+				<anchored to="constitution_total" />
+				<static textres="CON" />
+			</label_abilityscore>
+			<string_npc_abilitymodtext name="constitution_modifier">
+				<anchored to="constitution_total" />
+			</string_npc_abilitymodtext>
+
+			<basicnumberc name="dexterity_total">
+				<anchored width="60" height="60">
+					<top parent="constitution_total" anchor="top" />
+					<right parent="constitution_total" anchor="left" relation="relative" offset="-20" />
+				</anchored>
+				<default>10</default>
+				<modifiersize>mini</modifiersize>
+				<nodrag />
+				<readonly />
+			</basicnumberc>
+			<label_abilityscore>
+				<anchored to="dexterity_total" />
+				<static textres="DEX" />
+			</label_abilityscore>
+			<string_npc_abilitymodtext name="dexterity_modifier">
+				<anchored to="dexterity_total" />
+			</string_npc_abilitymodtext>
+
+			<basicnumberc name="strength_total">
+				<anchored width="60" height="60">
+					<top parent="constitution_total" anchor="top" />
+					<right parent="constitution_total" anchor="left" relation="relative" offset="-20" />
+				</anchored>
+				<default>10</default>
+				<modifiersize>mini</modifiersize>
+				<nodrag />
+				<readonly />
+			</basicnumberc>
+			<label_abilityscore>
+				<anchored to="strength_total" />
+				<static textres="STR" />
+			</label_abilityscore>
+			<string_npc_abilitymodtext name="strength_modifier">
+				<anchored to="strength_total" />
+			</string_npc_abilitymodtext>
+
+			<basicnumberc name="intelligence_total">
+				<anchored width="60" height="60">
+					<top parent="constitution_total" anchor="top" />
+					<left parent="constitution_total" anchor="right" relation="relative" offset="20" />
+				</anchored>
+				<default>10</default>
+				<modifiersize>mini</modifiersize>
+				<nodrag />
+				<readonly />
+			</basicnumberc>
+			<label_abilityscore>
+				<anchored to="intelligence_total" />
+				<static textres="INT" />
+			</label_abilityscore>
+			<string_npc_abilitymodtext name="intelligence_modifier">
+				<anchored to="intelligence_total" />
+			</string_npc_abilitymodtext>
+
+			<basicnumberc name="wisdom_total">
+				<anchored width="60" height="60">
+					<top parent="constitution_total" anchor="top" />
+					<left parent="constitution_total" anchor="right" relation="relative" offset="20" />
+				</anchored>
+				<default>10</default>
+				<modifiersize>mini</modifiersize>
+				<nodrag />
+				<readonly />
+			</basicnumberc>
+			<label_abilityscore>
+				<anchored to="wisdom_total" />
+				<static textres="WIS" />
+			</label_abilityscore>
+			<string_npc_abilitymodtext name="wisdom_modifier">
+				<anchored to="wisdom_total" />
+			</string_npc_abilitymodtext>
+
+			<basicnumberc name="charisma_total">
+				<anchored width="60" height="60">
+					<top parent="constitution_total" anchor="top" />
+					<left parent="constitution_total" anchor="right" relation="relative" offset="20" />
+				</anchored>
+				<default>10</default>
+				<modifiersize>mini</modifiersize>
+				<nodrag />
+				<readonly />
+			</basicnumberc>
+			<label_abilityscore>
+				<anchored to="charisma_total" />
+				<static textres="CHA" />
+			</label_abilityscore>
+			<string_npc_abilitymodtext name="charisma_modifier">
+				<anchored to="charisma_total" />
+			</string_npc_abilitymodtext>
+
+			<!-- Base -->
+			<label_charframetop name="abilities_base_header">
+				<anchored height="20">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="15" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_init</icons>
+				<static textres="charwizard_label_base" />
+			</label_charframetop>
+			<number_charwizard_abilitymod name="constitution_base">
+				<anchored width="40" height="40">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="10" />
+					<left parent="constitution_total" anchor="center" offset="-20" />
+				</anchored>
+				<default>10</default>
+			</number_charwizard_abilitymod>
+			<button_charwizard_ability_genvalup name="constitution_genup">
+				<anchored to="constitution_base" />
+			</button_charwizard_ability_genvalup>
+			<button_charwizard_ability_genvaldown name="constitution_gendown">
+				<anchored to="constitution_base" />
+			</button_charwizard_ability_genvaldown>
+
+			<number_charwizard_abilitymod name="dexterity_base">
+				<anchored width="40" height="40">
+					<top parent="constitution_base" anchor="top" />
+					<right parent="constitution_base" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+				<default>10</default>
+			</number_charwizard_abilitymod>
+			<button_charwizard_ability_genvalup name="dexterity_genup">
+				<anchored to="dexterity_base" />
+			</button_charwizard_ability_genvalup>
+			<button_charwizard_ability_genvaldown name="dexterity_gendown">
+				<anchored to="dexterity_base" />
+			</button_charwizard_ability_genvaldown>
+
+			<number_charwizard_abilitymod name="strength_base">
+				<anchored width="40" height="40">
+					<top parent="constitution_base" anchor="top" />
+					<right parent="constitution_base" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+				<default>10</default>
+			</number_charwizard_abilitymod>
+			<button_charwizard_ability_genvalup name="strength_genup">
+				<anchored to="strength_base" />
+			</button_charwizard_ability_genvalup>
+			<button_charwizard_ability_genvaldown name="strength_gendown">
+				<anchored to="strength_base" />
+			</button_charwizard_ability_genvaldown>
+
+			<number_charwizard_abilitymod name="intelligence_base">
+				<anchored width="40" height="40">
+					<top parent="constitution_base" anchor="top" />
+					<left parent="constitution_base" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<default>10</default>
+			</number_charwizard_abilitymod>
+			<button_charwizard_ability_genvalup name="intelligence_genup">
+				<anchored to="intelligence_base" />
+			</button_charwizard_ability_genvalup>
+			<button_charwizard_ability_genvaldown name="intelligence_gendown">
+				<anchored to="intelligence_base" />
+			</button_charwizard_ability_genvaldown>
+
+			<number_charwizard_abilitymod name="wisdom_base">
+				<anchored width="40" height="40">
+					<top parent="constitution_base" anchor="top" />
+					<left parent="constitution_base" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<default>10</default>
+			</number_charwizard_abilitymod>
+			<button_charwizard_ability_genvalup name="wisdom_genup">
+				<anchored to="wisdom_base" />
+			</button_charwizard_ability_genvalup>
+			<button_charwizard_ability_genvaldown name="wisdom_gendown">
+				<anchored to="wisdom_base" />
+			</button_charwizard_ability_genvaldown>
+
+			<number_charwizard_abilitymod name="charisma_base">
+				<anchored width="40" height="40">
+					<top parent="constitution_base" anchor="top" />
+					<left parent="constitution_base" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<default>10</default>
+			</number_charwizard_abilitymod>
+			<button_charwizard_ability_genvalup name="charisma_genup">
+				<anchored to="charisma_base" />
+			</button_charwizard_ability_genvalup>
+			<button_charwizard_ability_genvaldown name="charisma_gendown">
+				<anchored to="charisma_base" />
+			</button_charwizard_ability_genvaldown>
+
+			<!-- Race -->
+			<label_charframetop name="abilities_race_header">
+				<anchored height="20">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="15" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_race</icons>
+				<static textres="charwizard_label_race" />
+			</label_charframetop>
+			<number_charwizard_abilitymod name="constitution_race">
+				<anchored width="40" height="40">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="10" />
+					<left parent="constitution_total" anchor="center" offset="-20" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="dexterity_race">
+				<anchored width="40" height="40">
+					<top parent="constitution_race" anchor="top" />
+					<right parent="constitution_race" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="strength_race">
+				<anchored width="40" height="40">
+					<top parent="constitution_race" anchor="top" />
+					<right parent="constitution_race" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="intelligence_race">
+				<anchored width="40" height="40">
+					<top parent="constitution_race" anchor="top" />
+					<left parent="constitution_race" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="wisdom_race">
+				<anchored width="40" height="40">
+					<top parent="constitution_race" anchor="top" />
+					<left parent="constitution_race" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="charisma_race">
+				<anchored width="40" height="40">
+					<top parent="constitution_race" anchor="top" />
+					<left parent="constitution_race" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<!-- ASI -->
+			<label_charframetop name="abilities_asi_header">
+				<anchored height="20">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="15" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_class</icons>
+				<static textres="charwizard_label_asi" />
+			</label_charframetop>
+			<number_charwizard_abilitymod name="constitution_asi">
+				<anchored width="40" height="40">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="10" />
+					<left parent="constitution_total" anchor="center" offset="-20" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="dexterity_asi">
+				<anchored width="40" height="40">
+					<top parent="constitution_asi" anchor="top" />
+					<right parent="constitution_asi" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="strength_asi">
+				<anchored width="40" height="40">
+					<top parent="constitution_asi" anchor="top" />
+					<right parent="constitution_asi" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="intelligence_asi">
+				<anchored width="40" height="40">
+					<top parent="constitution_asi" anchor="top" />
+					<left parent="constitution_asi" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="wisdom_asi">
+				<anchored width="40" height="40">
+					<top parent="constitution_asi" anchor="top" />
+					<left parent="constitution_asi" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<number_charwizard_abilitymod name="charisma_asi">
+				<anchored width="40" height="40">
+					<top parent="constitution_asi" anchor="top" />
+					<left parent="constitution_asi" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod>
+
+			<!-- Misc -->
+			<label_charframetop name="abilities_misc_header">
+				<anchored height="20">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="15" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_name</icons>
+				<static textres="misc" />
+			</label_charframetop>
+			<number_charwizard_abilitymod_edit name="constitution_misc">
+				<anchored width="40" height="40">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="10" />
+					<left parent="constitution_total" anchor="center" offset="-20" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="dexterity_misc">
+				<anchored width="40" height="40">
+					<top parent="constitution_misc" anchor="top" />
+					<right parent="constitution_misc" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="strength_misc">
+				<anchored width="40" height="40">
+					<top parent="constitution_misc" anchor="top" />
+					<right parent="constitution_misc" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="intelligence_misc">
+				<anchored width="40" height="40">
+					<top parent="constitution_misc" anchor="top" />
+					<left parent="constitution_misc" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="wisdom_misc">
+				<anchored width="40" height="40">
+					<top parent="constitution_misc" anchor="top" />
+					<left parent="constitution_misc" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="charisma_misc">
+				<anchored width="40" height="40">
+					<top parent="constitution_misc" anchor="top" />
+					<left parent="constitution_misc" anchor="right" relation="relative" offset="40" />
+				</anchored>
+				<displaysign />
+			</number_charwizard_abilitymod_edit>
+
+			<!-- Overwrite -->
+			<label_charframetop name="abilities_overwrite_header">
+				<anchored height="20">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="15" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_abilities</icons>
+				<static textres="charwizard_label_override" />
+			</label_charframetop>
+			<number_charwizard_abilitymod_edit name="constitution_override">
+				<anchored width="40" height="40">
+					<top parent="abilities_select_header" anchor="bottom" relation="relative" offset="10" />
+					<left parent="constitution_total" anchor="center" offset="-20" />
+				</anchored>
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="dexterity_override">
+				<anchored width="40" height="40">
+					<top parent="constitution_override" anchor="top" />
+					<right parent="constitution_override" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="strength_override">
+				<anchored width="40" height="40">
+					<top parent="constitution_override" anchor="top" />
+					<right parent="constitution_override" anchor="left" relation="relative" offset="-35" />
+				</anchored>
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="intelligence_override">
+				<anchored width="40" height="40">
+					<top parent="constitution_override" anchor="top" />
+					<left parent="constitution_override" anchor="right" relation="relative" offset="40" />
+				</anchored>
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="wisdom_override">
+				<anchored width="40" height="40">
+					<top parent="constitution_override" anchor="top" />
+					<left parent="constitution_override" anchor="right" relation="relative" offset="40" />
+				</anchored>
+			</number_charwizard_abilitymod_edit>
+
+			<number_charwizard_abilitymod_edit name="charisma_override">
+				<anchored width="40" height="40">
+					<top parent="constitution_override" anchor="top" />
+					<left parent="constitution_override" anchor="right" relation="relative" offset="40" />
+				</anchored>
+			</number_charwizard_abilitymod_edit>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="sub_charwizard_abilities_pointbuy">
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<label_column name="point_label">
+				<anchored>
+					<left offset="15" />
+				</anchored>
+				<static textres="charwizard_label_pointsremaining" />
+			</label_column>
+			<numbercontrol name="points_used">
+				<anchored width="40" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="125" />
+				</anchored>
+			</numbercontrol>
+			<label>
+				<anchored to="points_used" position="right" offset="5,0" />
+				<static>/</static>
+			</label>
+			<numbercontrol name="points_max">
+				<anchored to="points_used" position="righthigh" offset="20,0" width="40" height="20" />
+				<default>27</default>
+				<readonly />
+			</numbercontrol>
+		</sheetdata>
+	</windowclass>
+</root>

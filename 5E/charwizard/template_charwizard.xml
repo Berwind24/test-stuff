@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+	Please see the license.html file included with this distribution for
+	attribution and copyright information.
+-->
+
+<root>
+	<template name="button_charlevelup">
+		<button_text>
+			<state textres="char_button_levelup" />
+			<script>
+				function onInit()
+					setVisible(DB.isOwner(window.getDatabaseNode()));
+				end
+				function onButtonPress()
+					CharWizardManager.importCharacter(window.getDatabaseNode());
+				end
+			</script>
+		</button_text>
+	</template>
+
+	<template name="button_charwizard_level_genvalup">
+		<buttoncontrol>
+			<icon normal="arrow_sm_up" />
+			<invisible />
+			<script>
+				function onButtonPress()
+					local nLevel = window.level.getValue();
+					window.level.setValue(nLevel + 1);
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="button_charwizard_level_genvaldown">
+		<buttoncontrol>
+			<icon normal="arrow_sm_down" />
+			<invisible />
+			<script>
+				function onButtonPress()
+					local nLevel = window.level.getValue();
+					window.level.setValue(nLevel - 1);
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="sub_charwizard">
+		<subwindow>
+			<anchored to="contentanchor">
+				<top anchor="bottom" relation="relative" offset="10" />
+				<left />
+				<right offset="-10" />
+				<bottom parent="" offset="-40" />
+			</anchored>
+			<frame name="groupbox" offset="10,10,15,10" />
+		</subwindow>
+	</template>
+	<template name="sub_charwizard_steps">
+		<subwindow>
+			<anchored to="contentanchor" height="50">
+				<top anchor="bottom" relation="relative" offset="5" />
+				<left offset="-10" />
+				<right />
+			</anchored>
+			<activate />
+			<fastinit />
+			<class>sub_charwizard_step_buttons</class>
+		</subwindow>
+	</template>
+
+	<template name="button_charwizard_tab">
+		<button_text>
+			<anchored height="20" />
+			<tooltip textres="" />
+			<state textres="" />
+			<font>subwindowsmalltitle</font>
+			<script>
+				function onButtonPress()
+					local aButtons = {};
+					if CharWizardManager.character_choices.identity then
+						aButtons = {"button_class", "button_commit"};
+					else
+						aButtons = {"button_race", "button_class", "button_abilities", "button_background", "button_equipment", "button_commit"};
+					end
+
+					local wTop = UtilityManager.getTopWindow(window);
+					local sName = getName():gsub("button_", "");
+
+					for _,v in pairs(aButtons) do
+						if v == getName() then
+							setFrame("buttondown", 5, 5, 5, 5);
+							wTop["sub_" .. sName].setVisible(true);
+						else
+							local sSub = v:gsub("button_", "");
+							window[v].setFrame("buttonup", 5, 5, 5, 5);
+							wTop["sub_" .. sSub].setVisible(false);
+						end
+
+					end
+
+					if wTop["sub_" .. sName].subwindow then
+						wTop["sub_" .. sName].subwindow.update();
+					end
+				end
+			</script>
+		</button_text>
+	</template>
+
+	<template name="button_charwizard_expand_window">
+		<buttoncontrol>
+			<anchored width="20" height="20" />
+			<state icon="button_expand" />
+			<state icon="button_collapse" />
+			<script>
+				function onButtonPress()
+					window[self.target[1]].setVisible(not window[self.target[1]].isVisible());
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="button_charwizard_expand_list_spells">
+		<buttoncontrol>
+			<anchored width="20" height="20" />
+			<state icon="button_expand" />
+			<state icon="button_collapse" />
+			<script>
+				function onButtonPress()
+					if getValue() == 1 then
+						setValue(0);
+					else
+						setValue(1);
+					end
+					window[self.target[1]].setVisible(not window[self.target[1]].isVisible());
+
+					if not window[self.target[1]].window.selection_desc.isEmpty() then
+						window[self.target[1]].window.selection_desc.setVisible(not window[self.target[1]].window.selection_desc.isVisible());
+					end
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="button_spelllevel_filter">
+		<buttoncontrol>
+			<anchored width="40" height="15">
+				<top parent="button_level0" anchor="top" />
+				<left parent="button_level0" anchor="right" relation="relative" offset="10" />
+			</anchored>
+			<stateframe>
+				<normal name="buttonup" offset="5,5,5,5" nobaseframe="true" />
+				<pressed name="buttondown" offset="5,5,5,5" nobaseframe="true" />
+			</stateframe>
+			<frame name="buttonup" offset="5,5,5,5" />
+			<font>button-white</font>
+			<pressed offset="1,1" />
+		</buttoncontrol>
+	</template>
+
+	<template name="number_charwizard_abilitymod_edit">
+		<basicnumberc>
+			<nodrag />
+			<hideonvalue>0</hideonvalue>
+			<script>
+				function onInit()
+					onValueChanged()
+				end
+				function onValueChanged()
+					local sName = getName();
+					sName = sName:gsub("_.*", "");
+					CharWizardAbilitiesManager.updateAbilitiesTotal(window, sName);
+				end
+			</script>
+		</basicnumberc>
+	</template>
+	<template name="number_charwizard_abilitymod">
+		<number_charwizard_abilitymod_edit>
+			<readonly />
+			<script>
+				function onInit()
+					super.onInit();
+
+					local sName = getName();
+					sName = sName:gsub(".*_", "");
+
+					if sName == "race" then
+						CharWizardAbilitiesManager.updateRaceAbilities(window)
+					end
+					if sName == "base" then
+						setHoverCursor("hand");
+					end
+				end
+				function onDragStart(button, x, y, draginfo)
+					if getName():lower():match("base") then
+						draginfo.setType("number");
+						draginfo.setNumberData(getValue());
+						draginfo.setCustomData(self);
+
+						return true
+					end
+				end
+				function onDrop(x, y, draginfo)
+					if getName():lower():match("base") then
+						local nCurBase = getValue();
+						local nDraggedBase = draginfo.getNumberData();
+						local cOrigDrag = draginfo.getCustomData();
+
+						cOrigDrag.setValue(nCurBase);
+						setValue(nDraggedBase);
+					end
+				end
+			</script>
+		</number_charwizard_abilitymod_edit>
+	</template>
+
+	<template name="comboboxc_gen_standardarray">
+		<comboboxc>
+			<listdirection >down</listdirection>
+			<center />
+			<invisible />
+			<script>
+				function onInit()
+					addItems({15, 14, 13, 12, 10, 8});
+				end
+				function onValueChanged()
+					--[[CharWizardManager.setGenMethod(window);--]]
+				end
+			</script>
+		</comboboxc>
+	</template>
+
+	<template name="number_abilitygen_manual">
+		<basicnumberc>
+			<modifiersize>mini</modifiersize>
+			<nodrag />
+			<script>
+				function onValueChanged()
+					local sName = getName();
+					sName = sName:gsub("_manual", "");
+					window.parentcontrol.window[sName .. "_base"].setValue(getValue());
+				end
+			</script>
+		</basicnumberc>
+	</template>
+
+	<template name="button_charwizard_ability_genvalup">
+		<buttoncontrol>
+			<anchored position="aboveright" offset="-25,-20" width="20" height="20" />
+			<icon normal="arrow_sm_up" />
+			<invisible />
+			<script>
+				function onButtonPress()
+					local sName = getName();
+					CharWizardAbilitiesManager.handleAbilityPointBuy(window, sName, 1);
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="button_charwizard_ability_genvaldown">
+		<buttoncontrol>
+			<anchored position="belowright" offset="-25,-20" width="20" height="20" />
+			<icon normal="arrow_sm_down" />
+			<invisible />
+			<script>
+				function onButtonPress()
+					local sName = getName();
+					CharWizardAbilitiesManager.handleAbilityPointBuy(window, sName, -1);
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="background_roll">
+		<button_roll>
+			<anchored position="lefthigh" offset="10,0" width="20" heigh="20" />
+			<invisible />
+			<script>
+				function onButtonPress()
+					local sBackground = window.background.getValue();
+					local sName = getName();
+					sName = sName:gsub("_roll", "");
+
+					if sName == "personalitytrait" then
+						sName = "personality trait";
+					end
+
+					CharWizardBackgroundManager.handleBackgroundRoll(window, sBackground, sName);
+				end
+			</script>
+		</button_roll>
+	</template>
+
+	<template name="button_classfeatures">
+		<buttoncontrol>
+			<state frame="buttonup" frameoffset="5,5,5,5" />
+			<state frame="buttondown" frameoffset="5,5,5,5" />
+			<font>button-white</font>
+			<pressed offset="1,1" />
+			<invisible />
+			<script>
+				local aButtons = { "features", "spells" };
+
+				function onButtonPress()
+					local sName = getName();
+					sName = sName:gsub("button_", "");
+
+					for _,v in pairs(aButtons) do
+						if v ~= sName then
+							window["button_" .. v].setValue(0);
+						end
+					end
+
+					local bFeatures = window.button_features.getValue() == 1;
+					local bSpells = window.button_spells.isVisible() and window.button_spells.getValue() == 1;
+
+					window.class_decisions_list.setVisible(bFeatures and not bSpells);
+					window.sub_classspells.setVisible(bSpells and not bFeatures);
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="button_charwizard">
+		<button_text_sm>
+			<anchored width="120" height="20" />
+			<state textres="charwizard_title" />
+			<script>
+				function onButtonPress()
+					Interface.openWindow("charwizard", "");
+				end	
+			</script>
+		</button_text_sm>
+	</template>
+</root>

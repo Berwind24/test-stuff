@@ -1,0 +1,1219 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+	Please see the license.html file included with this distribution for
+	attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charwizard_sub_class">
+		<margins control="0,0,0,2" />
+		<script>
+			function update()
+				for _,v in pairs(class_list.getWindows()) do
+					CharWizardClassManager.updateClass(v, v.class.getValue(), tonumber(v.level.getValue()));
+
+					for _,v2 in ipairs(v.class_decisions_list.getWindows()) do
+						for _,v3 in ipairs(v2.decisions_list.getWindows()) do
+							local sDecision = v3.decision.getValue();
+							if sDecision ~= "Select Option" and sDecision ~= "Select Specialization" then
+								CharWizardClassManager.processClassDecision(v3);
+							end
+						end
+					end
+
+					if v.sub_classspells.subwindow then
+						v.sub_classspells.subwindow.updateTotals()
+					end
+				end
+
+				CharWizardManager.updateAlerts();
+			end
+		</script>
+		<sheetdata>
+			<label_charframetop name="class_select_header">
+				<anchored height="20">
+					<top offset="10"/>
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_class</icons>
+				<static textres="charwizard_title_class" />
+			</label_charframetop>
+
+			<windowlist name="class_list">
+				<anchored>
+					<top parent="class_select_header" anchor="bottom" relation="relative" offset="7" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<class>list_entry_charwizard_class</class>
+				<script>
+					function onListChanged()
+						window.filter_class.setComboBoxVisible(isEmpty());
+						window.filter_class_label.setVisible(isEmpty())
+						window.filter_name.setVisible(isEmpty())
+
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</windowlist>
+			<scrollbar>
+				<anchored to="class_list" />
+				<target>class_list</target>
+			</scrollbar>
+
+			<buttoncontrol name="button_addclass">
+				<anchored height="20">
+					<top parent="class_select_header" anchor="bottom" relation="relative" offset="7" />
+					<left offset="30" />
+					<right offset="-10" />
+				</anchored>
+				<stateframe>
+					<normal name="buttonup" offset="5,5,5,5" nobaseframe="true" />
+					<pressed name="buttondown" offset="5,5,5,5" nobaseframe="true" />
+				</stateframe>
+				<frame name="buttonup" offset="5,5,5,5" />
+				<font>button-white</font>
+				<pressed offset="1,1" />
+				<invisible />
+				<script>
+					function onInit()
+						setText("Add Class");
+					end
+					function onButtonPress()
+						window.sub_classselection.setVisible(not window.sub_classselection.isVisible());
+
+						if window.sub_classselection.isVisible() then
+							window.sub_classselection.subwindow.rebuildList();
+							setText("Cancel");
+						else
+							setText("Add Class");
+						end
+
+						window.filter_class.setVisible(window.sub_classselection.isVisible());
+						window.filter_class_label.setVisible(window.sub_classselection.isVisible());
+						window.filter_name.setVisible(window.sub_classselection.isVisible());
+					end
+				</script>
+			</buttoncontrol>
+
+			<comboboxc name="filter_class">
+				<anchored width="270" height="20">
+					<top parent="class_select_header" anchor="bottom" relation="relative" offset="7" />
+					<left offset="100" />
+				</anchored>
+				<listdirection >down</listdirection>
+				<listmaxsize>16</listmaxsize>
+				<script>
+					function onValueChanged()
+						window.sub_classselection.subwindow.onFilterChanged(getValue());
+					end
+				</script>
+			</comboboxc>
+			<label name="filter_class_label">
+				<anchored to="filter_class" position="lefthigh" offset="10" height="20" />
+				<static textres="charwizard_label_filtersource" />
+			</label>
+			<filter name="filter_name">
+				<anchored height="20">
+					<top parent="class_select_header" anchor="bottom" relation="relative" offset="7" />
+					<left offset="60" />
+					<right offset="-70" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						super.onValueChanged();
+						window.sub_classselection.subwindow.onNameFilterChanged(getValue());
+					end
+				</script>
+			</filter>
+
+			<subwindow name="sub_classselection">
+				<anchored>
+					<top parent="class_select_header" anchor="bottom" relation="relative" offset="7" />
+					<left offset="0" />
+					<right offset="-1" />
+				</anchored>
+				<class>sub_charwizard_class_classselection</class>
+				<activate />
+				<fastinit />
+			</subwindow>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="sub_charwizard_class_classselection">
+		<margins control="0,0,0,2" />
+		<script file="charwizard/scripts/class_sub_classselections.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<windowlist name="list">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="30" />
+					<right offset="-15" />
+				</anchored>
+				<class>list_entry_charwizard_classselection</class>
+				<columns width="175" fillwidth="true" />
+				<empty><textres>charwizard_empty_inventory</textres></empty>
+				<script>
+					function onSortCompare(w1, w2)
+						return window.onSortCompare(w1, w2);
+					end
+				</script>
+			</windowlist>
+
+			<genericcontrol name="listbottomanchor">
+				<anchored to="list" height="0">
+					<top anchor="bottom" relation="relative" offset="15" />
+					<left />
+					<right />
+				</anchored>
+			</genericcontrol>
+
+			<masterindex_anchor_paging name="pageanchor" />
+			<list_page_info name="page_info" />
+			<list_page_start name="page_start" />
+			<list_page_prev name="page_prev" />
+			<list_page_next name="page_next" />
+			<list_page_end name="page_end" />
+
+			<genericcontrol name="spacer">
+				<anchored width="0" height="7">
+					<top parent="pageanchor" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_classselection">
+		<margins control="0,0,10,10" />
+		<frame>groupbox</frame>
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<linkcontrol name="shortcut">
+				<anchored to="rightanchor" width="20" height="20">
+					<top offset="10" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<class>reference_class</class>
+				<readonly />
+				<invisible />
+			</linkcontrol>
+
+			<stringc_list_link_base name="name">
+				<anchored>
+					<top offset="10" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+				<linktarget>shortcut</linktarget>
+			</stringc_list_link_base>
+			<buttoncontrol name="button_select">
+				<anchored position="insidetopleft" offset="10,10" width="20" height="20" />
+				<icon normal="button_add" pressed="button_add_down" />
+				<invisible />
+				<script>
+					function onButtonPress()
+						local _,sClassRecord = window.shortcut.getValue();
+						CharWizardClassManager.addClass(sClassRecord);
+
+						if CharWizardManager.character_choices.identity then
+							for _,v in pairs(window.windowlist.window.parentcontrol.window.class_list.getWindows()) do
+								v.levelup_button.setVisible(false);
+								v.level_label.setVisible(true);
+								v.level.setVisible(true);
+							end
+
+							window.windowlist.window.parentcontrol.window.button_addclass.setVisible(false);
+						end
+
+						window.windowlist.window.parentcontrol.window.button_addclass.setText("Add Class");
+
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_class">
+		<margins control="0,0,0,3" />
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<genericcontrol name="idelete">
+				<anchored to="rightanchor" width="20" height="20">
+					<top offset="5" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<icon>button_dialog_cancel_down</icon>
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+					function onClickRelease()
+						local bLevelUp = false;
+						if CharWizardManager.character_choices.identity then
+							window.windowlist.window.button_addclass.setVisible(true);
+
+							for _,v in pairs(window.windowlist.getWindows()) do
+								v.levelup_button.setVisible(true);	
+								v.level_label.setVisible(false);	
+								v.level.setVisible(true);
+							end
+
+							bLevelUp = true;
+						end
+
+						CharWizardClassManager.deleteClass(window, bLevelUp);
+					end
+				</script>
+			</genericcontrol>
+
+			<button_charwizard_level_genvalup name="level_up">
+				<anchored to="rightanchor" width="12" height="12">
+					<top offset="2" />
+					<right anchor="left" offset="-40" />
+				</anchored>
+			</button_charwizard_level_genvalup>
+			<button_charwizard_level_genvaldown name="level_down">
+				<anchored to="rightanchor" width="12" height="12">
+					<top offset="15" />
+					<right anchor="left" offset="-40" />
+				</anchored>
+			</button_charwizard_level_genvaldown>
+			<basicnumber name="level">
+				<anchored to="rightanchor" width="40" height="20">
+					<top offset="4" />
+					<right anchor="left" offset="-60" />
+				</anchored>
+				<default>1</default>
+				<readonly />
+				<invisible />
+				<script>
+					function onValueChanged()
+						CharWizardClassManager.updateClass(window, window.class.getValue(), getValue());
+
+						if window.sub_classspells.subwindow then
+							local wSubClassSpells = window.sub_classspells.subwindow;
+							if wSubClassSpells.sub_spellslist.subwindow then
+								local wSubSpellsList = wSubClassSpells.sub_spellslist.subwindow;
+								if wSubSpellsList.parentcontrol.isVisible() then
+									wSubSpellsList.updateFilterButtons();
+									wSubSpellsList.onListRecordsChanged();
+								end
+								wSubClassSpells.updateTotals();
+							end
+						end
+					end
+				</script>
+			</basicnumber>
+
+			<buttoncontrol name="levelup_button">
+				<anchored to="level" width="60" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<stateframe>
+					<normal name="buttonup" offset="5,5,5,5" nobaseframe="true" />
+					<pressed name="buttondown" offset="5,5,5,5" nobaseframe="true" />
+				</stateframe>
+				<frame name="buttonup" offset="5,5,5,5" />
+				<font>button-white</font>
+				<pressed offset="1,1" />
+				<invisible />
+				<script>
+					function onInit()
+						setText("Level Up");
+					end
+					function onButtonPress()
+						local tClass = CharWizardManager.character_choices["class"];
+						local sClassName = window.class.getValue();
+						local nClassLevel = tClass[sClassName].level;
+
+						window.level.setValue(tostring(nClassLevel + 1));
+						window.cancellevelup_button.setVisible(true);
+						setVisible(false);
+
+						tClass[sClassName].levelup = 1;
+						CharWizardClassManager.updateClass(window, sClassName, nClassLevel + 1);
+
+						window.windowlist.window.button_addclass.setVisible(false);
+
+						for _,v in ipairs(window.windowlist.getWindows()) do
+							if v ~= window then
+								v.levelup_button.setVisible(false);	
+							end
+						end
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+
+			<buttoncontrol name="cancellevelup_button">
+				<anchored to="level" width="60" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<stateframe>
+					<normal name="buttonup" offset="5,5,5,5" nobaseframe="true" />
+					<pressed name="buttondown" offset="5,5,5,5" nobaseframe="true" />
+				</stateframe>
+				<frame name="buttonup" offset="5,5,5,5" />
+				<font>button-white</font>
+				<pressed offset="1,1" />
+				<invisible />
+				<script>
+					function onInit()
+						setText("Cancel");
+					end
+					function onButtonPress()
+						local tClass = CharWizardManager.character_choices["class"];
+						local sClassName = window.class.getValue();
+						local nClassLevel = tClass[sClassName].level;
+
+						window.level.setValue(tostring(nClassLevel - 1));
+						window.levelup_button.setVisible(true);
+						setVisible(false);
+						tClass[sClassName].levelup = nil;
+						CharWizardClassManager.updateClass(window, sClassName, nClassLevel - 1);
+
+						window.windowlist.window.button_addclass.setVisible(true);
+						for _,v in ipairs(window.windowlist.getWindows()) do
+							if v ~= window then
+								v.levelup_button.setVisible(true);	
+							end
+						end
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+
+			<label name="level_label">
+				<anchored to="level" width="30" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<static textres="charwizard_label_level" />
+				<invisible />
+			</label>
+
+			<stringc_list_link_base name="class">
+				<anchored>
+					<top parent="rightanchor" anchor="bottom" relation="relative" offset="2" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-200" />
+				</anchored>
+				<readonly />
+				<font>reference-b-large</font>
+				<multilinespacing>20</multilinespacing>
+				<linktarget>shortcut</linktarget>
+			</stringc_list_link_base>
+
+			<linkcontrol name="shortcut">
+				<anchored position="insidetopleft" offset="15,5" width="20" height="20" />
+				<class>reference_class</class>
+				<readonly />
+				<invisible />
+			</linkcontrol>
+
+			<button_classfeatures name="button_features">
+				<anchored width="80" height="15">
+					<top parent="rightanchor" anchor="bottom" relation="relative" offset="5" />
+					<left offset="40" />
+				</anchored>
+				<state merge="join" textres="charwizard_label_features" />
+				<state merge="join" textres="charwizard_label_features" />
+			</button_classfeatures>
+
+			<button_classfeatures name="button_spells">
+				<anchored to="button_features" position="righthigh" offset="10,0" width="80" height="15" />
+				<state merge="join" textres="charwizard_label_spells" />
+				<state merge="join" textres="charwizard_label_spells" />
+			</button_classfeatures>
+
+			<genericcontrol name="alert">
+				<anchored position="insidetopleft" width="20" height="20">
+					<top offset="10" />
+					<left offset="10" />
+				</anchored>
+				<icon>button_alert</icon>
+				<invisible />
+			</genericcontrol>
+
+			<windowlist name="class_decisions_list">
+				<anchored>
+					<top parent="rightanchor" anchor="bottom" relation="relative" offset="5" />
+					<left offset="40" />
+					<right offset="-15" />
+				</anchored>
+				<class>list_entry_charwizard_classfeatures</class>
+				<child merge="delete" />
+				<sortby><control>feature</control></sortby>
+				<noscroll />
+				<invisible />
+			</windowlist>
+
+			<subwindow name="sub_classspells">
+				<anchored>
+					<top parent="rightanchor" anchor="bottom" relation="relative" offset="5" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<class>charwizard_sub_classspells</class>
+				<invisible />
+			</subwindow>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_classfeatures">
+		<margins control="0,0,10,10" />
+		<frame>groupbox</frame>
+		<script>
+			function updateVisibility()
+				if button_expand.isVisible() then
+					decisions_list.setVisible(not decisions_list.isVisible());
+					feature_desc.setVisible(not feature_desc.isVisible());
+
+					if decisions_list.isVisible() then
+						button_expand.setValue(1);
+					else
+						button_expand.setValue(0);
+					end
+				end
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<linkcontrol name="shortcut">
+				<anchored to="rightanchor" width="20" height="20">
+					<top offset="10" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<class>reference_racialtrait</class>
+				<readonly />
+				<invisible />
+				<script>
+					function onDragStart(button, x, y, draginfo)
+						return false;
+					end
+				</script>
+			</linkcontrol>
+
+			<buttoncontrol name="button_expand">
+				<anchored to="rightanchor" width="40" height="20">
+					<top offset="10" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<state icon="button_expand" />
+				<state icon="button_collapse" />
+				<invisible />
+				<script>
+					function onButtonPress()
+						window.updateVisibility();
+					end
+				</script>
+			</buttoncontrol>
+
+			<label name="level">
+				<anchored width="190">
+					<top offset="10" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</label>
+
+			<label name="feature">
+				<anchored>
+					<top offset="10" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</label>
+
+			<genericcontrol name="alert">
+				<anchored position="insidetopleft" width="20" height="20">
+					<top offset="10" />
+					<left offset="10" />
+				</anchored>
+				<icon>button_alert</icon>
+				<invisible />
+				<script>
+					function updateAlerts()
+						CharWizardManager.updateButtonAlert("class");
+					end
+				</script>
+			</genericcontrol>
+
+			<formattedtextcontrol name="feature_desc">
+				<anchored>
+					<top parent="feature" anchor="bottom" relation="relative" offset="10" />
+					<left offset="55" />
+					<right offset="-5" />
+				</anchored>
+				<invisible />
+				<script>
+					function onClickDown()
+						return true;
+					end
+
+					function onClickRelease()
+						window.updateVisibility();
+					end
+				</script>
+			</formattedtextcontrol>
+
+			<windowlist name="decisions_list">
+				<anchored>
+					<top parent="feature" anchor="bottom" relation="relative" offset="10" />
+					<left offset="15" />
+					<right offset="-5" />
+				</anchored>
+				<class>list_entry_charwizard_feature_decisions</class>
+				<noscroll />
+				<invisible />
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_charwizard_feature_decisions">
+		<margins control="0,0,10,10" />
+		<frame>groupbox</frame>
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<label name="choice">
+				<anchored width="150">
+					<top offset="10" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+			</label>
+
+			<button_idelete name="button_modify">
+				<anchored to="rightanchor" width="20" height="20">
+					<top offset="10" />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<script>
+					function onButtonPress()
+						if getValue() == 0 then
+							local tClass = CharWizardManager.character_choices["class"];
+							local sClassName = window.windowlist.window.windowlist.window.class.getValue();
+							local sClassFeature = window.windowlist.window.feature.getValue();
+							local sFeat = window.choice.getValue();
+
+							for _,v in pairs(tClass) do
+								if v.features then
+									for _,v2 in pairs(v.features) do
+										if v2.feat then
+											if sFeat:lower() == v2.feat:lower() then
+												v2.feat = nil;
+												break;
+											end
+										end
+									end
+								end
+							end
+
+							window.choice.setValue();
+							setVisible(false);
+							window.sub_decision_choice.setVisible(true);
+							window.sub_decision_choice.subwindow.rebuildList();
+
+							CharWizardManager.updateAlerts();
+						end
+					end
+				</script>
+			</button_idelete>
+
+			<label name="decision">
+				<anchored>
+					<top offset="10" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+			</label>
+
+			<genericcontrol name="alert">
+				<anchored position="insidetopleft" width="20" height="20">
+					<top offset="10" />
+					<left offset="10" />
+				</anchored>
+				<icon>button_alert</icon>
+				<invisible />
+			</genericcontrol>
+
+			<formattedtextcontrol name="decision_desc">
+				<anchored>
+					<top parent="decision" anchor="bottom" relation="relative" offset="10" />
+					<left offset="55" />
+					<right offset="-5" />
+				</anchored>
+				<invisible />
+			</formattedtextcontrol>
+
+			<comboboxc name="decision_choice">
+				<anchored>
+					<top parent="decision" anchor="bottom" relation="relative" offset="10" />
+					<left offset="40" />
+					<right offset="-5" />
+				</anchored>
+				<listdirection>down</listdirection>
+				<listmaxsize>7</listmaxsize>
+				<invisible />
+				<script>
+					function onValueChanged()
+						CharWizardClassManager.processClassDecision(window);
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</comboboxc>
+
+			<subwindow name="sub_decision_choice">
+				<anchored>
+					<top parent="decision" anchor="bottom" relation="relative" offset="10" />
+					<left offset="40" />
+					<right offset="-5" />
+				</anchored>
+				<class>decision_sub_classfeat_choice</class>
+			</subwindow>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="decision_sub_classfeat_choice">
+		<script file="charwizard/scripts/decision_sub_feat_choice.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<filter name="filter">
+				<anchored>
+					<left offset="40" />
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<right offset="-70" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						super.onValueChanged();
+						window.onNameFilterChanged(getValue());
+					end
+				</script>
+			</filter>
+
+			<windowlist name="list">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="10" />
+					<left offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<class>list_entry_decision_classfeat</class>
+				<columns width="195" fillwidth="true" />
+				<script>
+					function onSortCompare(w1, w2)
+						return window.onSortCompare(w1, w2);
+					end
+				</script>
+			</windowlist>
+
+			<genericcontrol name="listbottomanchor">
+				<anchored to="list" height="0">
+					<left />
+					<right />
+					<top anchor="bottom" relation="relative" offset="15" />
+				</anchored>
+			</genericcontrol>
+
+			<masterindex_anchor_paging name="pageanchor" />
+			<list_page_info name="page_info" />
+			<list_page_start name="page_start" />
+			<list_page_prev name="page_prev" />
+			<list_page_next name="page_next" />
+			<list_page_end name="page_end" />
+
+			<genericcontrol name="spacer">
+				<anchored width="0" height="7">
+					<top parent="pageanchor" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_decision_classfeat">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<stringc_list_link_base name="name">
+				<anchored position="insidetop">
+					<left offset="35" />
+					<top offset="7" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<linktarget>link</linktarget>
+				<font name="sheettext" />
+				<readonly />
+			</stringc_list_link_base>
+			<linkcontrol name="link">
+				<bounds>0,0,0,0</bounds>
+				<class>reference_feat</class>
+			</linkcontrol>
+
+			<buttoncontrol name="button_select">
+				<anchored position="insidetopleft" offset="10,2" width="20" height="20" />
+				<icon normal="button_add" pressed="button_add_down" />
+				<script>
+					function onButtonPress()
+						local tClass = CharWizardManager.character_choices["class"];
+						local sClassName = window.windowlist.window.parentcontrol.window.windowlist.window.windowlist.window.class.getValue();
+						local sClassFeature = window.windowlist.window.parentcontrol.window.windowlist.window.feature.getValue();
+						local sFeat = window.name.getValue();
+
+						if not tClass[sClassName].features[sClassFeature] then
+							tClass[sClassName].features[sClassFeature] = {};
+						end
+						tClass[sClassName].features[sClassFeature].feat = sFeat:lower();
+
+						window.windowlist.window.parentcontrol.window.choice.setValue(sFeat);
+						window.windowlist.window.parentcontrol.window.button_modify.setVisible(true);
+						window.windowlist.window.parentcontrol.setVisible(false);
+						window.windowlist.window.rebuildList();
+
+						CharWizardManager.updateAlerts();
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charwizard_sub_classspells">
+		<margins control="0,0,0,2" />
+		<script file="charwizard/scripts/classspells_sub_known.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<label_column>
+				<anchored>
+					<left offset="30" />
+				</anchored>
+				<static textres="charwizard_label_cantrips" />
+			</label_column>
+			<numbercontrol name="cantrips_max">
+				<anchored width="40" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="97" />
+				</anchored>
+				<readonly />
+				<script>
+					function onInit()
+						window.updateTotals();
+					end
+				</script>
+			</numbercontrol>
+
+			<label_column_right name="prepared_spells_label">
+				<static textres="charwizard_label_preparedspells" />
+			</label_column_right>
+			<numbercontrol name="prepared_spells_max">
+				<anchored to="cantrips_max" width="40" height="20">
+					<top />
+					<right parent="" offset="-5" />
+				</anchored>
+				<readonly />
+				<script>
+					function onInit()
+						window.updateTotals();
+					end
+				</script>
+			</numbercontrol>
+
+			<label_column_right name="known_spells_label">
+				<static textres="charwizard_label_knownspells" />
+			</label_column_right>
+			<numbercontrol name="known_spells_max">
+				<anchored to="cantrips_max" width="40" height="20">
+					<top offset="-2" />
+					<right parent="" offset="-5" />
+				</anchored>
+				<readonly />
+				<script>
+					function onInit()
+						window.updateTotals();
+					end
+				</script>
+			</numbercontrol>
+
+			<header_column name="spellsknown_header">
+				<anchored>
+					<left offset="30" />
+					<right offset="-20" />
+				</anchored>
+				<static textres="charwizard_header_spellsknown" />
+			</header_column>
+			<windowlist name="spellcasting_filters">
+				<anchored>
+					<top parent="spellsknown_header" anchor="top" offset="-7" />
+					<left parent="spellsknown_header" offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<class>classspells_sub_knownfilter</class>
+				<columns width="50" fillwidth="true"/>
+				<invisible />
+			</windowlist>
+			<windowlist name="pactspellcasting_filters">
+				<anchored>
+					<top parent="spellsknown_header" anchor="top" offset="-7" />
+					<left parent="spellsknown_header" offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<class>classspells_sub_knownfilter</class>
+				<columns width="50" fillwidth="true"/>
+				<invisible />
+			</windowlist>
+			<windowlist name="list">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="35" />
+					<right offset="-15" />
+				</anchored>
+				<class>list_entry_list_known</class>
+				<columns width="155" fillwidth="true" />
+				<script>
+					function onSortCompare(w1, w2)
+						return window.onSortCompare(w1, w2);
+					end
+				</script>
+			</windowlist>
+
+			<header_column name="spells_header">
+				<anchored>
+					<left offset="30" />
+					<right offset="-20" />
+				</anchored>
+				<static textres="charwizard_header_spells" />
+			</header_column>
+			<windowlist name="spellcasting_spellsfilters">
+				<anchored>
+					<top parent="spells_header" anchor="top" offset="-7" />
+					<left parent="spells_header" offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<class>classspells_sub_spellsfilter</class>
+				<columns width="50" fillwidth="true"/>
+				<invisible />
+			</windowlist>
+			<windowlist name="pactspellcasting_spellsfilters">
+				<anchored>
+					<top parent="spells_header" anchor="top" offset="-7" />
+					<left parent="spells_header" offset="15" />
+					<right offset="-15" />
+				</anchored>
+				<class>classspells_sub_spellsfilter</class>
+				<columns width="50" fillwidth="true"/>
+				<invisible />
+			</windowlist>
+			<subwindow name="sub_spellslist">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="20" />
+					<right offset="-10" />
+				</anchored>
+				<class>classspells_sub_spells</class>
+				<activate />
+				<fastinit />
+			</subwindow>
+
+			<genericcontrol name="spacer">
+				<anchored width="0" height="7">
+					<top parent="sub_spellslist" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="classspells_sub_spells">
+		<margins control="0,0,0,2" />
+		<script file="charwizard/scripts/classspells_sub_spells.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<filter name="filter_spells">
+				<anchored>
+					<left offset="40" />
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<right offset="-70" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						super.onValueChanged();
+						window.onNameFilterChanged(getValue());
+					end
+				</script>
+			</filter>
+
+			<windowlist name="list">
+				<anchored height="150">
+					<left offset="15" />
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="10" />
+					<right offset="-5" />
+				</anchored>
+				<class>list_entry_list_spells</class>
+				<empty><textres>emptyset</textres></empty>
+				<columns width="155" fillwidth="true" />
+				<script>
+					function onSortCompare(w1, w2)
+						return window.onSortCompare(w1, w2);
+					end
+				</script>
+			</windowlist>
+
+			<genericcontrol name="listbottomanchor">
+				<anchored to="list" height="0">
+					<left />
+					<right />
+					<top anchor="bottom" relation="relative" offset="15" />
+				</anchored>
+			</genericcontrol>
+
+			<masterindex_anchor_paging name="pageanchor" />
+			<list_page_info name="page_info" />
+			<list_page_start name="page_start" />
+			<list_page_prev name="page_prev" />
+			<list_page_next name="page_next" />
+			<list_page_end name="page_end" />
+
+			<genericcontrol name="spacer">
+				<anchored width="0" height="7">
+					<top parent="pageanchor" anchor="bottom" relation="relative" />
+					<left />
+				</anchored>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="classspells_sub_knownfilter">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<buttoncontrol name="button_filter">
+				<anchored width="40" height="30">
+					<top offset="2" />
+					<left anchor="center" offset="-20" />
+				</anchored>
+				<state frame="buttonup" />
+				<state frame="buttondown" />
+				<script>
+					function onButtonPress()
+						if getValue() == 0 then
+							setValue(1);
+							return false
+						end
+
+						local cText = findWidget("spelllevel");
+						local sLevel = cText.getText();
+
+						for _,v in pairs(window.windowlist.getWindows()) do
+							local cText2 = v.button_filter.findWidget("spelllevel");
+							local sLevel2 = cText2.getText();
+
+							if sLevel ~= sLevel2 then
+								v.button_filter.setValue(0);
+							end
+						end
+
+						if getValue() == 0 then
+							sLevel = "";
+						end
+
+						window.windowlist.window.onFilterChanged(sLevel);
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="classspells_sub_spellsfilter">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<buttoncontrol name="button_filter">
+				<anchored width="40" height="30">
+					<top offset="2" />
+					<left anchor="center" offset="-20" />
+				</anchored>
+				<state frame="buttonup" />
+				<state frame="buttondown" />
+				<script>
+					function onButtonPress()
+						if getValue() == 0 then
+							setValue(1);
+							return false
+						end
+
+						local cText = findWidget("spelllevel");
+						local sLevel = cText.getText();
+
+						for _,v in pairs(window.windowlist.getWindows()) do
+							local cText2 = v.button_filter.findWidget("spelllevel");
+							local sLevel2 = cText2.getText();
+
+							if sLevel ~= sLevel2 then
+								v.button_filter.setValue(0);
+							end
+						end
+
+						if getValue() == 0 then
+							sLevel = "";
+						end
+
+						window.windowlist.window.sub_spellslist.subwindow.onFilterChanged(sLevel);
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_list_spells">
+		<margins control="0,0,0,3" />
+		<sheetdata>
+			<linkcontrol name="link">
+				<bounds>0,0,0,0</bounds>
+				<class>reference_spell</class>
+				<invisible />
+			</linkcontrol>
+
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<stringc_list_link_base name="name">
+				<anchored>
+					<top offset="2" />
+					<left offset="35" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+			</stringc_list_link_base>
+
+			<buttoncontrol name="button_select">
+				<anchored position="insidetopleft" offset="10,2" width="20" height="20" />
+				<icon normal="button_add" pressed="button_add_down" />
+				<script>
+					function onButtonPress()
+						local sClass, sRecord = window.link.getValue();
+						local sClassName = window.windowlist.window.parentcontrol.window.parentcontrol.window.class.getValue();
+						local tClass = CharWizardManager.character_choices["class"];
+
+						if not tClass[sClassName].spell then
+							tClass[sClassName].spell = {};
+						end
+
+						table.insert(tClass[sClassName].spell, sRecord);
+						window.windowlist.window.parentcontrol.window.rebuildList();
+						window.windowlist.window.parentcontrol.window.updateFilterButtons();
+						window.windowlist.window.rebuildList();
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="list_entry_list_known">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored position="insidetopright" offset="0,2" height="0" width="0" />
+			</genericcontrol>
+
+			<stringc_list_link_base name="name">
+				<anchored>
+					<top offset="2" />
+					<left offset="35" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<linktarget>link</linktarget>
+				<font name="sheettext" />
+				<readonly />
+			</stringc_list_link_base>
+			<linkcontrol name="link">
+				<bounds>0,0,0,0</bounds>
+				<class>reference_spell</class>
+			</linkcontrol>
+
+			<button_idelete name="idelete">
+				<anchored position="insidetopleft" offset="10,2" width="20" height="20" />
+				<script>
+					function onInit()
+						setVisibility(true);
+					end
+					function onButtonPress()
+						if getValue() == 0 then
+							local sClass, sRecord = window.link.getValue();
+							local nodeSource = DB.findNode(sRecord);
+
+							local sClassName = window.windowlist.window.parentcontrol.window.class.getValue();
+							local tClass = CharWizardManager.character_choices["class"][sClassName];
+
+							for k,v in pairs(tClass.spell) do
+								if sRecord == v then
+									table.remove(tClass.spell, k);
+
+									break
+								end
+							end
+
+
+							if window.windowlist.window.sub_spellslist.subwindow then
+								window.windowlist.window.sub_spellslist.subwindow.updateFilterButtons();
+								window.windowlist.window.sub_spellslist.subwindow.rebuildList();
+							end
+							window.windowlist.window.updateFilterButtons();
+							window.windowlist.window.rebuildList();
+						end
+					end
+				</script>
+			</button_idelete>
+		</sheetdata>
+	</windowclass>
+</root>
