@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="ability" copy="record_window_text">
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>char_ability_header</class>
+			</sub_record_header>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="char_ability_header" copy="record_header_simple">
+		<sheetdata>
+			<link_record_header name="link">
+				<class>ability</class>
+			</link_record_header>
+		</sheetdata>
+	</windowclass>
+</root>

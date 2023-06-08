@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="quest" copy="record_window">
+		<minimize>minimized_item</minimize>
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>quest_header</class>
+			</sub_record_header>
+			<subwindow_record name="content">
+				<class>quest_stats</class>
+			</subwindow_record>
+		</sheetdata>	
+	</windowclass>
+	<windowclass name="quest_header" copy="record_header" />
+	<windowclass name="quest_stats">
+		<script>
+			function onInit()
+				self.update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				description.setReadOnly(bReadOnly);
+				sub_gmnotes.update(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<ft_columnh name="description" />
+
+			<sub_column_gmnotes name="sub_gmnotes" />
+		</sheetdata>
+	</windowclass>
+</root>

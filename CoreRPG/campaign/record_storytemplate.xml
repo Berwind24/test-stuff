@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="story_button_generate">
+		<button_text_sm>
+			<anchored to="contentframe" width="100">
+				<top anchor="bottom" offset="10" />
+				<left anchor="center" offset="-50" />
+			</anchored>
+			<state textres="story_button_generate" />
+			<script file="campaign/scripts/story_template_generate.lua" />
+			<gmvisibleonly />
+		</button_text_sm>
+	</template>
+
+	<windowclass name="storytemplate" copy="record_window_story">
+		<sheetdata>
+			<sub_note_header name="header">
+				<class>storytemplate_header</class>
+			</sub_note_header>
+
+			<story_button_generate name="generate" />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="storytemplate_header" copy="record_header_story" />
+</root>
