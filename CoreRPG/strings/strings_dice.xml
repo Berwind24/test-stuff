@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<string name="diceselect_window_title">Dice</string>
+
+	<string name="diceselect_header_desktop">Desktop Dice</string>
+	<string name="diceselect_tooltip_desktop_scaleup">Increase Dice Scale</string>
+	<string name="diceselect_tooltip_desktop_scaledown">Decrease Dice Scale</string>
+	
+	<string name="diceselect_header_pointer">Pointer Color</string>
+	<string name="diceselect_header_color">Dice Color</string>
+	<string name="diceselect_header_skin">Dice Skin Selection</string>
+	<string name="diceselect_label_color_body">Body</string>
+	<string name="diceselect_label_color_text">Text</string>
+
+	<string name="diceselect_button_panel_togglelock">Toggle Panel Lock</string>
+	<string name="diceselect_button_drc">Custom Dice Rolls</string>
+
+	<string name="diceskin_group_DEFAULT">Default</string>
+	<string name="diceskin_group_SWKELEMENTALBASICSDICE">Elemental Basics</string>
+	<string name="diceskin_group_SWKMETALDICE">Metal</string>
+	<string name="diceskin_group_SWKAURADICE">Aura</string>
+	<string name="diceskin_group_SWKMAGICALDICE">Magical</string>
+	<string name="diceskin_group_SWKRINGOFELEMENTSDICE">Ring of Elements</string>
+	<string name="diceskin_group_SWKMAGICALTRAILDICE">Magical Trail</string>
+	<string name="diceskin_group_SWKFORCEFIELDDICE">Force Field</string>
+	<string name="diceskin_group_SWKWIZARDWROUGHTDICE">Wizard Wrought</string>
+	<string name="diceskin_group_SWKARTIFICERDICE">Artificer</string>
+
+	<string name="diceskin_unknown">Unknown</string>
+	<string name="diceskin_0">Default</string>
+	<string name="diceskin_1">Slash - Frost</string>
+	<string name="diceskin_2">Metal - Gold</string>
+	<string name="diceskin_3">Metal - Dark Gold</string>
+	<string name="diceskin_4">Metal - Steel</string>
+	<string name="diceskin_5">Metal - Pitted</string>
+	<string name="diceskin_6">Metal - Polished</string>
+	<string name="diceskin_7">Metal - Rusted Iron</string>
+	<string name="diceskin_8">Metal - Stained Copper</string>
+	<string name="diceskin_9">Metal - High Polish</string>
+	<string name="diceskin_10">Aura Cast - Arcane</string>
+	<string name="diceskin_11">Aura Cast - Earth</string>
+	<string name="diceskin_12">Aura Cast - Fire</string>
+	<string name="diceskin_13">Aura Cast - Frost</string>
+	<string name="diceskin_14">Aura Cast - Life</string>
+	<string name="diceskin_15">Aura Cast - Light</string>
+	<string name="diceskin_16">Aura Cast - Lightning</string>
+	<string name="diceskin_17">Aura Cast - Shadow</string>
+	<string name="diceskin_18">Aura Cast - Storm</string>
+	<string name="diceskin_19">Aura Cast - Water</string>
+	<string name="diceskin_20">Aura Enchant - Arcane</string>
+	<string name="diceskin_21">Aura Enchant - Earth</string>
+	<string name="diceskin_22">Aura Enchant - Fire</string>
+	<string name="diceskin_23">Aura Enchant - Frost</string>
+	<string name="diceskin_24">Aura Enchant - Life</string>
+	<string name="diceskin_25">Aura Enchant - Light</string>
+	<string name="diceskin_26">Aura Enchant - Lightning</string>
+	<string name="diceskin_27">Aura Enchant - Shadow</string>
+	<string name="diceskin_28">Aura Enchant - Storm</string>
+	<string name="diceskin_29">Aura Enchant - Water</string>
+	<string name="diceskin_30">Magical Charge - Arcane</string>
+	<string name="diceskin_31">Magical Charge - Earth</string>
+	<string name="diceskin_32">Magical Charge - Fire</string>
+	<string name="diceskin_33">Magical Charge - Frost</string>
+	<string name="diceskin_34">Magical Charge - Life</string>
+	<string name="diceskin_35">Magical Charge - Light</string>
+	<string name="diceskin_36">Magical Charge - Lightning</string>
+	<string name="diceskin_37">Magical Charge - Shadow</string>
+	<string name="diceskin_38">Magical Charge - Storm</string>
+	<string name="diceskin_39">Magical Charge - Water</string>
+	<string name="diceskin_40">Spinning Elements - Arcane</string>
+	<string name="diceskin_41">Spinning Elements - Earth</string>
+	<string name="diceskin_42">Spinning Elements - Fire</string>
+	<string name="diceskin_43">Spinning Elements - Frost</string>
+	<string name="diceskin_44">Spinning Elements - Life</string>
+	<string name="diceskin_45">Spinning Elements - Light</string>
+	<string name="diceskin_46">Spinning Elements - Lightning</string>
+	<string name="diceskin_47">Spinning Elements - Shadow</string>
+	<string name="diceskin_48">Spinning Elements - Storm</string>
+	<string name="diceskin_49">Spinning Elements - Water</string>
+	<string name="diceskin_50">Ring of Elements - Arcane</string>
+	<string name="diceskin_51">Ring of Elements - Earth</string>
+	<string name="diceskin_52">Ring of Elements - Fire</string>
+	<string name="diceskin_53">Ring of Elements - Frost</string>
+	<string name="diceskin_54">Ring of Elements - Life</string>
+	<string name="diceskin_55">Ring of Elements - Light</string>
+	<string name="diceskin_56">Ring of Elements - Lightning</string>
+	<string name="diceskin_57">Ring of Elements - Shadow</string>
+	<string name="diceskin_58">Ring of Elements - Storm</string>
+	<string name="diceskin_59">Ring of Elements - Water</string>
+	<string name="diceskin_60">Flames - Arcane</string>
+	<string name="diceskin_61">Flames - Earth</string>
+	<string name="diceskin_62">Flames - Fire</string>
+	<string name="diceskin_63">Flames - Frost</string>
+	<string name="diceskin_64">Flames - Life</string>
+	<string name="diceskin_65">Flames - Light</string>
+	<string name="diceskin_66">Flames - Lightning</string>
+	<string name="diceskin_67">Flames - Shadow</string>
+	<string name="diceskin_68">Flames - Storm</string>
+	<string name="diceskin_69">Flames - Water</string>
+	<string name="diceskin_70">Glowing Trail - Arcane</string>
+	<string name="diceskin_71">Glowing Trail - Earth</string>
+	<string name="diceskin_72">Glowing Trail - Fire</string>
+	<string name="diceskin_73">Glowing Trail - Frost</string>
+	<string name="diceskin_74">Glowing Trail - Life</string>
+	<string name="diceskin_75">Glowing Trail - Light</string>
+	<string name="diceskin_76">Glowing Trail - Lightning</string>
+	<string name="diceskin_77">Glowing Trail - Shadow</string>
+	<string name="diceskin_78">Glowing Trail - Storm</string>
+	<string name="diceskin_79">Glowing Trail - Water</string>
+	<string name="diceskin_80">Force Field - Arcane</string>
+	<string name="diceskin_81">Force Field - Earth</string>
+	<string name="diceskin_82">Force Field - Fire</string>
+	<string name="diceskin_83">Force Field - Frost</string>
+	<string name="diceskin_84">Force Field - Life</string>
+	<string name="diceskin_85">Force Field - Light</string>
+	<string name="diceskin_86">Force Field - Lightning</string>
+	<string name="diceskin_87">Force Field - Shadow</string>
+	<string name="diceskin_88">Force Field - Storm</string>
+	<string name="diceskin_89">Force Field - Water</string>
+	<string name="diceskin_90">Blast - Earth</string>
+	<string name="diceskin_91">Force Field - Spinning</string>
+	<string name="diceskin_92">Metal - Rusted</string>
+	<string name="diceskin_93">Metal - Stained</string>
+	<string name="diceskin_94">Elemental Basics - Arcane</string>
+	<string name="diceskin_95">Elemental Basics - Earth</string>
+	<string name="diceskin_96">Elemental Basics - Fire</string>
+	<string name="diceskin_97">Elemental Basics - Frost</string>
+	<string name="diceskin_98">Elemental Basics - Life</string>
+	<string name="diceskin_99">Elemental Basics - Light</string>
+	<string name="diceskin_100">Elemental Basics - Lightning</string>
+	<string name="diceskin_101">Elemental Basics - Shadow</string>
+	<string name="diceskin_102">Elemental Basics - Storm</string>
+	<string name="diceskin_103">Elemental Basics - Water</string>
+	<string name="diceskin_110">Wizard Wrought - Base</string>
+	<string name="diceskin_111">Wizard Wrought - Base (Inverted)</string>
+	<string name="diceskin_112">Wizard Wrought - Storm</string>
+	<string name="diceskin_113">Wizard Wrought - Storm (Inverted)</string>
+	<string name="diceskin_114">Wizard Wrought - Water</string>
+	<string name="diceskin_115">Wizard Wrought - Water (Inverted)</string>
+	<string name="diceskin_116">Wizard Wrought - Iron</string>
+	<string name="diceskin_117">Wizard Wrought - Iron (Inverted)</string>
+	<string name="diceskin_118">Wizard Wrought - Bark</string>
+	<string name="diceskin_119">Wizard Wrought - Bark (Inverted)</string>
+	<string name="diceskin_120">Wizard Wrought - White Gold</string>
+	<string name="diceskin_121">Wizard Wrought - White Gold (Inverted)</string>
+	<string name="diceskin_122">Wizard Wrought - Antique Gold</string>
+	<string name="diceskin_123">Wizard Wrought - Antique Gold (Inverted)</string>
+	<string name="diceskin_124">Wizard Wrought - Green Gold</string>
+	<string name="diceskin_125">Wizard Wrought - Green Gold (Inverted)</string>
+	<string name="diceskin_130">Artificer - Base</string>
+	<string name="diceskin_131">Artificer - Night Shade</string>
+	<string name="diceskin_132">Artificer - Bark</string>
+	<string name="diceskin_133">Artificer - Dark Gold</string>
+	<string name="diceskin_134">Artificer - Gold</string>
+	<string name="diceskin_135">Artificer - White Gold</string>
+	<string name="diceskin_136">Artificer - Rusted Iron</string>
+	<string name="diceskin_137">Artificer - Green Iron</string>
+	<string name="diceskin_138">Artificer - Stained Copper</string>
+	<string name="diceskin_139">Artificer - Storm</string>
+	<string name="diceskin_140">Artificer - Green Gilt</string>
+	<string name="diceskin_141">Artificer - Liquid Dream</string>
+
+	<!-- Custom Dice Rolls -->
+	<string name="drc_window_title">Custom Dice Rolls</string>
+	<string name="drc_list_label_name">Roll Type</string>
+	<string name="drc_list_label_default">Default</string>
+	<string name="drc_list_label_custom">Custom</string>
+
+	<string name="drc_item_button_usedefault">Use Default Skin?</string>
+	<string name="drc_item_custom">Drag dice skin button from Color Selection window to set custom skin</string>
+	<string name="drc_item_button_custom_clear">Clear Custom Skin</string>
+
+	<string name="drc_label_type_damage">Damage</string>
+	<string name="drc_label_type_heal">Healing</string>
+
+	<string name="drc_label_subtype_acid">Element - Acid</string>
+	<string name="drc_label_subtype_cold">Element - Cold</string>
+	<string name="drc_label_subtype_electricity">Element - Electricity</string>
+	<string name="drc_label_subtype_fire">Element - Fire</string>
+	<string name="drc_label_subtype_force">Element - Force</string>
+	<string name="drc_label_subtype_lightning">Element - Lightning</string>
+	<string name="drc_label_subtype_necrotic">Element - Necrotic</string>
+	<string name="drc_label_subtype_negative">Element - Negative</string>
+	<string name="drc_label_subtype_poison">Element - Poison</string>
+	<string name="drc_label_subtype_positive">Element - Positive</string>
+	<string name="drc_label_subtype_psychic">Element - Psychic</string>
+	<string name="drc_label_subtype_radiant">Element - Radiant</string>
+	<string name="drc_label_subtype_sonic">Element - Sonic</string>
+	<string name="drc_label_subtype_thunder">Element - Thunder</string>
+
+	<string name="drc_label_subtype_bludgeoning">Physical - Bludgeoning</string>
+	<string name="drc_label_subtype_piercing">Physical - Piercing</string>
+	<string name="drc_label_subtype_slashing">Physical - Slashing</string>
+	<string name="drc_label_subtype_ballistic">Physical - Ballistic</string>
+	<string name="drc_label_subtype_concussion">Physical - Concussion</string>
+
+	<string name="drc_label_subtype_adamantine">Material - Adamantine</string>
+	<string name="drc_label_subtype_cold-forged-iron">Material - Cold Iron</string>
+	<string name="drc_label_subtype_cold-iron">Material - Cold Iron</string>
+	<string name="drc_label_subtype_silver">Material - Silver</string>
+
+	<string name="drc_label_subtype_epic">Special - Epic</string>
+	<string name="drc_label_subtype_magic">Special - Magic</string>
+	<string name="drc_label_subtype_magical">Special - Magical</string>
+
+	<string name="drc_label_subtype_health">Health</string>
+	<string name="drc_label_subtype_temp">Temp</string>
+	<string name="drc_label_subtype_stamina">Stamina</string>
+
+	<string name="drc_tooltip_mode_toggle">Toggle Mode Customizations</string>
+	<string name="drc_label_mode_critical">Critical</string>
+	<string name="drc_label_mode_precision">Precision</string>
+</root>
+
